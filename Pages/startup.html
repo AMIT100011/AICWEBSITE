@@ -1,114 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>AIC-SOA | Startups</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Shared styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="../styles/aic.css" />
-    <!-- Page specific styles -->
-    <link rel="stylesheet" href="../styles/startup.css" />
-    <!-- Alert Bar Styles -->
-    <style>
-    .alert-row { display: flex; align-items: center; background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%); color: white; height: 45px; font-family: sans-serif; width: 100%; transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease; overflow: hidden; }
-    .alert-row.hidden { height: 0; opacity: 0; padding: 0; }
-      .alert-row .alert-label { background-color: #ff0000; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: bold; }
-      .alert-content-area { flex-grow: 1; padding-left: 20px; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center; }
-      .alert-msg { position: absolute; left: 0; color: white; text-decoration: none; font-size: 14px; cursor: pointer; opacity: 0; transform: translateX(20px); transition: opacity 0.4s ease, transform 0.4s ease; white-space: nowrap; pointer-events: none; }
-      .alert-msg.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
-      .alert-controls { margin-left: auto; display: flex; height: 100%; border-left: 1px solid rgba(255,255,255,0.2); }
-      .alert-controls button { background: transparent; border: none; color: white; padding: 0 15px; cursor: pointer; font-size: 18px; transition: background 0.3s; }
-      .alert-controls button:hover { background: rgba(255,255,255,0.1); }
-      .alert-badge { font-size: 10px; padding: 2px 8px; border-radius: 3px; margin-left: 10px; font-weight: bold; display: inline-block; }
-      .alert-badge.update { background-color: #4caf50; } .alert-badge.new { background-color: #ff9800; }
-      .alert-popup-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: none; }
-      .alert-popup-modal.active { display: block; }
-      .alert-popup-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-      .alert-popup-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; max-width: 450px; width: 85%; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.4); }
-      .alert-popup-header { background: #3f51b5; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-      .alert-popup-title { margin: 0; font-size: 18px; font-weight: 600; }
-      .alert-popup-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; line-height: 1; }
-      .alert-popup-body { padding: 0; } .alert-popup-body img { width: 100%; height: auto; display: block; }
-    </style>
-  </head>
-  <body>
-    <!-- Top Header & Navigation -->
-    <div class="header-top">
-      <header class="navbar">
-        <div class="logo-container">
-          <img src="../assets/logos/aiclogo.png" alt="aic" />
-          <div class="logo-text"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>AIC-SOA | Startups</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/aic.css" />
+  <!-- Page specific styles -->
+  <link rel="stylesheet" href="../styles/startup.css" />
+  <!-- Alert Bar Styles -->
+  <style>
+    .alert-row {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%);
+      color: white;
+      height: 45px;
+      font-family: sans-serif;
+      width: 100%;
+      transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+
+    .alert-row.hidden {
+      height: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+    .alert-row .alert-label {
+      background-color: #ff0000;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .alert-content-area {
+      flex-grow: 1;
+      padding-left: 20px;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-msg {
+      position: absolute;
+      left: 0;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .alert-msg.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .alert-controls {
+      margin-left: auto;
+      display: flex;
+      height: 100%;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .alert-controls button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 0 15px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    .alert-controls button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .alert-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 10px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .alert-badge.update {
+      background-color: #4caf50;
+    }
+
+    .alert-badge.new {
+      background-color: #ff9800;
+    }
+
+    .alert-popup-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
+      display: none;
+    }
+
+    .alert-popup-modal.active {
+      display: block;
+    }
+
+    .alert-popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .alert-popup-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 85%;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .alert-popup-header {
+      background: #3f51b5;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .alert-popup-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .alert-popup-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .alert-popup-body {
+      padding: 0;
+    }
+
+    .alert-popup-body img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Header & Navigation -->
+  <div class="header-top">
+    <header class="navbar">
+      <div class="logo-container">
+        <img src="../assets/logos/aiclogo.png" alt="aic" />
+        <div class="logo-text"></div>
+      </div>
+      <nav class="nav-links">
+        <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">About Us</a>
+          <div class="dropdown-menu">
+            <a href="../About us-section/founders_desk.html">Founder's Desk</a>
+            <a href="../About us-section/about uss/reach.html">About</a>
+            <a href="../About us-section/board_members.html">Board Members</a>
+            <a href="../About us-section/team.html">Team</a>
+            <a href="../About us-section/our_focus.html">Our Focus</a>
+            <a href="../Pages/Infrastructure.html">Infrastructure</a>
+          </div>
         </div>
-        <nav class="nav-links">
-          <div class="nav-item"><a href="../index.html" class="nav-link">Home</a></div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">About Us</a>
-            <div class="dropdown-menu">
-              <a href="../About us-section/founders_desk.html">Founder's Desk</a>
-              <a href="../About us-section/about uss/reach.html">About</a>
-              <a href="#">Board Members</a>
-              <a href="#">Team</a>
-              <a href="../About us-section/our_focus.html">Our Focus</a>
-              <a href="../Pages/Infrastructure.html">Infrastructure</a>
-            </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Programs</a>
+          <div class="dropdown-menu">
+            <a href="../program_benefits/programs_benefits.html">Program Benefits</a>
+            <a href="../incubator/incubator.html">Incubator</a>
+            <a href="../virtual_incubator/virtual_incubator.html">Virtual Incubator</a>
           </div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">Programs</a>
-            <div class="dropdown-menu">
-              <a href="../program_benefits/programs_benefits.html">Program Benefits</a>
-              <a href="../incubator/incubator.html">Incubator</a>
-              <a href="../virtual_incubator/virtual_incubator.html">Virtual Incubator</a>
-            </div>
-          </div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">Startup Hubs</a>
-            <div class="dropdown-menu">
-              <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer">Startup India Website</a>
-              <a href="https://startupodisha.gov.in/" target="_blank" rel="noopener noreferrer">Startup Odisha Website</a>
-              <a href="https://aim.gov.in/" target="_blank" rel="noopener noreferrer">Atal Innovation Mission</a>
-              <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer">Women Empowerment Funds</a>
-              <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer">Women MSME Policy</a>
-            </div>
-          </div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">Community</a>
-            <div class="dropdown-menu">
-              <a href="../Pages/startup.html">Startups</a>
-              <a href="../Pages/mentor.html">Our Mentors</a>
-              <a href="../Pages/partner.html">Partners</a>
-              <a href="../Pages/supported.html">Supported By</a>
-            </div>
-          </div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">Resources</a>
-            <div class="dropdown-menu">
-              <a href="../GAllery/gallery.html">Our Gallery</a>
-            </div>
-          </div>
-          <div class="nav-item">
-            <a href="#" class="nav-link">Connect</a>
-            <div class="dropdown-menu">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform" target="_blank" rel="noopener noreferrer">Register</a>
-            </div>
-          </div>
-        </nav>
-        <div class="gov-logo-group">
-          <img src="../Nitiayog-BmYBgTyb.png" alt="NITI Aayog" />
         </div>
-      </header>
-      <div class="alert-row">
-        <div class="alert-label">Alert</div>
-        <div class="alert-content-area" id="alert-msg-container">
-          <a href="#" class="alert-msg active" data-popup="../popup.jpeg" data-title="AI in Education">AI in Education: Revolutionizing Learning Experience.<span class="alert-badge new">NEW</span></a>
-          <a href="#" class="alert-msg" data-popup="../popup2.jpeg" data-title="Speaker Announcement">Our Eminent Speakers for AI in Education.<span class="alert-badge new">NEW</span></a>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Startup Hubs</a>
+          <div class="dropdown-menu">
+            <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer">Startup India
+              Website</a>
+            <a href="https://startupodisha.gov.in/" target="_blank" rel="noopener noreferrer">Startup Odisha Website</a>
+            <a href="https://aim.gov.in/" target="_blank" rel="noopener noreferrer">Atal Innovation Mission</a>
+            <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer">Women Empowerment
+              Funds</a>
+            <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer">Women MSME
+              Policy</a>
+          </div>
         </div>
-        <div class="alert-controls"><button id="alertPrevBtn">&#10094;</button><button id="alertNextBtn">&#10095;</button></div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Community</a>
+          <div class="dropdown-menu">
+            <a href="../Pages/startup.html">Startups</a>
+            <a href="../Pages/mentor.html">Our Mentors</a>
+            <a href="../Pages/partner.html">Partners</a>
+            <a href="../Pages/supported.html">Supported By</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Resources</a>
+          <div class="dropdown-menu">
+            <a href="../GAllery/gallery.html">Our Gallery</a>
+            <a href="../event_page/events.html">Events</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Connect</a>
+          <div class="dropdown-menu">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform"
+              target="_blank" rel="noopener noreferrer">Register</a>
+          </div>
+        </div>
+      </nav>
+      <div class="gov-logo-group">
+        <img src="../Nitiayog-BmYBgTyb.png" alt="NITI Aayog" />
+      </div>
+    </header>
+    <div class="alert-row">
+      <div class="alert-label">Alert</div>
+      <div class="alert-content-area" id="alert-msg-container">
+        <a href="#" class="alert-msg active" data-popup="../popup.jpeg" data-title="AI in Education">AI in Education:
+          Revolutionizing Learning Experience.<span class="alert-badge new">NEW</span></a>
+        <a href="#" class="alert-msg" data-popup="../popup2.jpeg" data-title="Speaker Announcement">Our Eminent Speakers
+          for AI in Education.<span class="alert-badge new">NEW</span></a>
+      </div>
+      <div class="alert-controls"><button id="alertPrevBtn">&#10094;</button><button id="alertNextBtn">&#10095;</button>
       </div>
     </div>
-    <div class="alert-popup-modal"><div class="alert-popup-overlay"></div><div class="alert-popup-container"><div class="alert-popup-header"><h3 class="alert-popup-title">Announcement</h3><button class="alert-popup-close">&times;</button></div><div class="alert-popup-body"><img src="" alt="Announcement" /></div></div></div>
-    <script>
-    (function() {
+  </div>
+  <div class="alert-popup-modal">
+    <div class="alert-popup-overlay"></div>
+    <div class="alert-popup-container">
+      <div class="alert-popup-header">
+        <h3 class="alert-popup-title">Announcement</h3><button class="alert-popup-close">&times;</button>
+      </div>
+      <div class="alert-popup-body"><img src="" alt="Announcement" /></div>
+    </div>
+  </div>
+  <script>
+    (function () {
       const messages = document.querySelectorAll('.alert-msg'), container = document.getElementById('alert-msg-container'), prevBtn = document.getElementById('alertPrevBtn'), nextBtn = document.getElementById('alertNextBtn'), popupModal = document.querySelector('.alert-popup-modal'), popupOverlay = document.querySelector('.alert-popup-overlay'), popupTitle = document.querySelector('.alert-popup-title'), popupImage = document.querySelector('.alert-popup-body img'), popupCloseBtn = document.querySelector('.alert-popup-close');
       if (!messages.length) return; let currentIdx = 0, autoSlide, isTransitioning = false;
       function transitionTo(newIdx) { if (isTransitioning || newIdx === currentIdx) return; isTransitioning = true; messages[currentIdx].classList.remove('active'); messages[newIdx].classList.add('active'); currentIdx = newIdx; setTimeout(() => { isTransitioning = false; }, 400); }
@@ -130,333 +293,339 @@
       const alertRow = document.querySelector('.alert-row');
       window.addEventListener('scroll', () => { alertRow.classList.toggle('hidden', window.scrollY > 50); }, { passive: true });
     })();
-    </script>
-    <!-- HERO -->
-<section class="hero">
-  <img src="../assets/startupimages/focusbanner-BERm6Wud.jpg" class="hero-bg" alt="Hero Banner">
+  </script>
+  <!-- HERO -->
+  <section class="hero">
+    <img src="../assets/startupimages/focusbanner-BERm6Wud.jpg" class="hero-bg" alt="Hero Banner">
 
-  <div class="hero-overlay">
-    <h1>Transforming <span>Business</span></h1>
-    <p>Innovative startups incubated under AIC-SOA Foundation</p>
-  </div>
-</section>
+    <div class="hero-overlay">
+      <h1>Transforming <span>Business</span></h1>
+      <p>Innovative startups incubated under AIC-SOA Foundation</p>
+    </div>
+  </section>
 
 
-    <!-- STARTUPS -->
-    <section class="startup-section">
-      <h2>Our Incubated Startups</h2>
+  <!-- STARTUPS -->
+  <section class="startup-section">
+    <h2>Our Incubated Startups</h2>
 
-      <div class="startup-grid">
-        <!-- PLANTERY -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture1-CnZitwGM.png" alt="Plantery" />
-          </div>
-          <h3>PLANTERY</h3>
-          <p>
-            Plantery has developed innovative plant-based energy storage systems
-            using grass as a raw material, eliminating toxic chemicals commonly
-            used in batteries. The startup has created more than 15 prototypes,
-            partnered with Indian Oil (₹29.5 lakh grant), attracted Shell Global
-            USA interest, won over 14 awards, gained IIT support, and ranks
-            among India’s top green solution startups.
-          </p>
+    <div class="startup-grid">
+      <!-- PLANTERY -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture1-CnZitwGM.png" alt="Plantery" />
         </div>
+        <h3>PLANTERY</h3>
+        <p>
+          Plantery has developed innovative plant-based energy storage systems
+          using grass as a raw material, eliminating toxic chemicals commonly
+          used in batteries. The startup has created more than 15 prototypes,
+          partnered with Indian Oil (₹29.5 lakh grant), attracted Shell Global
+          USA interest, won over 14 awards, gained IIT support, and ranks
+          among India’s top green solution startups.
+        </p>
+      </div>
 
-        <!-- DRIEV -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture2-Da7PfdAM.png" alt="DriEV" />
-          </div>
-          <h3>driEV</h3>
-          <p>
-            DriEV is a dynamic venture fusing innovation, sustainability, and
-            local manufacturing to reshape the future of campus and urban
-            commuting. The startup focuses on electric mobility solutions and
-            has been showcased at ICAI-Startup Sphere’23 and exhibited at
-            Aarogya Manthan.
-          </p>
+      <!-- DRIEV -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture2-Da7PfdAM.png" alt="DriEV" />
         </div>
+        <h3>driEV</h3>
+        <p>
+          DriEV is a dynamic venture fusing innovation, sustainability, and
+          local manufacturing to reshape the future of campus and urban
+          commuting. The startup focuses on electric mobility solutions and
+          has been showcased at ICAI-Startup Sphere’23 and exhibited at
+          Aarogya Manthan.
+        </p>
+      </div>
 
-        <!-- EMINENT PRODUCTS -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture3-CM2603tC.png" alt="Eminent Products" />
-          </div>
-          <h3>EMINENT PRODUCTS</h3>
-          <p>
-            Eminent Products focuses on developing compact, high-torque
-            gearboxes with precision power transmission. The technology
-            addresses the rapidly growing automation market across defense,
-            robotics, electric vehicles (EVs), AGVs, and medical devices.
-          </p>
+      <!-- EMINENT PRODUCTS -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture3-CM2603tC.png" alt="Eminent Products" />
         </div>
+        <h3>EMINENT PRODUCTS</h3>
+        <p>
+          Eminent Products focuses on developing compact, high-torque
+          gearboxes with precision power transmission. The technology
+          addresses the rapidly growing automation market across defense,
+          robotics, electric vehicles (EVs), AGVs, and medical devices.
+        </p>
+      </div>
 
-        <!-- PHOTOSPIMEDX -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture4-6zIjylLZ.png" alt="PhotoSpimeDx" />
-          </div>
-          <h3>PHOTOSPIMEDX PVT. LTD.</h3>
-          <p>
-            PhotoSpimeDx is developing a smartphone-based fluorescence
-            spectroscopic device for early-stage cervical and oral cancer
-            diagnosis. The solution combines offline and online market research
-            to deliver affordable, sensitive, user-friendly, and equipment-free
-            diagnostic products.
-          </p>
+      <!-- PHOTOSPIMEDX -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture4-6zIjylLZ.png" alt="PhotoSpimeDx" />
         </div>
+        <h3>PHOTOSPIMEDX PVT. LTD.</h3>
+        <p>
+          PhotoSpimeDx is developing a smartphone-based fluorescence
+          spectroscopic device for early-stage cervical and oral cancer
+          diagnosis. The solution combines offline and online market research
+          to deliver affordable, sensitive, user-friendly, and equipment-free
+          diagnostic products.
+        </p>
+      </div>
 
-        <!-- EVSPEER -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture5-Be9iqzBd.png" alt="EVSPEER" />
-          </div>
-          <h3>EVSPEER</h3>
-          <p>
-            EVSPEER works on EV charging infrastructure and energy storage
-            solutions. Its products include Charz (static EV level-1 charging
-            unit) and Anerzy (portable EV charger with battery backup). The
-            company has sold over 20 Charz units and gained 438 subscribers for
-            Anerzy.
-          </p>
+      <!-- EVSPEER -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture5-Be9iqzBd.png" alt="EVSPEER" />
         </div>
+        <h3>EVSPEER</h3>
+        <p>
+          EVSPEER works on EV charging infrastructure and energy storage
+          solutions. Its products include Charz (static EV level-1 charging
+          unit) and Anerzy (portable EV charger with battery backup). The
+          company has sold over 20 Charz units and gained 438 subscribers for
+          Anerzy.
+        </p>
+      </div>
 
-        <!-- GREEN MANDI -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture6-B7vMOLkM.png" alt="Green Mandi" />
-          </div>
-          <h3>GREEN MANDI DEALS PVT. LTD.</h3>
-          <p>
-            Green Mandi is building a tech-driven ERP platform that connects
-            farmers, traders, SMEs, and buyers through a secure unified B2B
-            marketplace. The solution aims to digitize the unorganized
-            agri-trade sector with transparency and trust.
-          </p>
+      <!-- GREEN MANDI -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture6-B7vMOLkM.png" alt="Green Mandi" />
         </div>
+        <h3>GREEN MANDI DEALS PVT. LTD.</h3>
+        <p>
+          Green Mandi is building a tech-driven ERP platform that connects
+          farmers, traders, SMEs, and buyers through a secure unified B2B
+          marketplace. The solution aims to digitize the unorganized
+          agri-trade sector with transparency and trust.
+        </p>
+      </div>
 
-        <!-- SPK-MAK -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture7-CGa24AsB.png" alt="SPK-MAK" />
-          </div>
-          <h3>SPK-MAK TECHNOLOGIES</h3>
-          <p>
-            SPK-MAK Technologies Pvt. Ltd. offers end-to-end electronic product
-            engineering and ODM solutions. The company integrates Robotics,
-            Embedded Systems, IoT, AI/ML, and CAD to transform ideas into
-            market-ready, cost-effective products.
-          </p>
+      <!-- SPK-MAK -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture7-CGa24AsB.png" alt="SPK-MAK" />
         </div>
+        <h3>SPK-MAK TECHNOLOGIES</h3>
+        <p>
+          SPK-MAK Technologies Pvt. Ltd. offers end-to-end electronic product
+          engineering and ODM solutions. The company integrates Robotics,
+          Embedded Systems, IoT, AI/ML, and CAD to transform ideas into
+          market-ready, cost-effective products.
+        </p>
+      </div>
 
-        <!-- HYDROVALLEY -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture8-J8cKndRq.png" alt="Hydro Valley" />
-          </div>
-          <h3>HYDROVALLEY</h3>
-          <p>
-            Hydro Valley is transforming sustainable agriculture through indoor
-            hydroponic farming. Based in Bhubaneswar, it produces
-            pesticide-free, nutrient-rich food using RO-purified water and
-            controlled environments, minimizing water usage and carbon
-            footprint.
-          </p>
+      <!-- HYDROVALLEY -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture8-J8cKndRq.png" alt="Hydro Valley" />
         </div>
+        <h3>HYDROVALLEY</h3>
+        <p>
+          Hydro Valley is transforming sustainable agriculture through indoor
+          hydroponic farming. Based in Bhubaneswar, it produces
+          pesticide-free, nutrient-rich food using RO-purified water and
+          controlled environments, minimizing water usage and carbon
+          footprint.
+        </p>
+      </div>
 
-        <!-- ANGIOSENSE -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture9-So3Wtcmg.png" alt="AngioSense" />
-          </div>
-          <h3>ANGIOSENSE</h3>
-          <p>
-            AngioSense develops a non-invasive diagnostic device to detect blood
-            vessel blockages without radiation or contrast dyes. Using sensors
-            for SpO₂, temperature, pulse, and bioimpedance, it enables faster
-            and safer vascular health assessment.
-          </p>
+      <!-- ANGIOSENSE -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture9-So3Wtcmg.png" alt="AngioSense" />
         </div>
+        <h3>ANGIOSENSE</h3>
+        <p>
+          AngioSense develops a non-invasive diagnostic device to detect blood
+          vessel blockages without radiation or contrast dyes. Using sensors
+          for SpO₂, temperature, pulse, and bioimpedance, it enables faster
+          and safer vascular health assessment.
+        </p>
+      </div>
 
-        <!-- AXHA BIOENERGY -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture10-DzKvKmrh.png" alt="AXHA Bioenergy" />
-          </div>
-          <h3>AXHA BIOENERGY PRIVATE LIMITED</h3>
-          <p>
-            AXHA Bioenergy operates in the renewable energy sector,
-            manufacturing eco-friendly biodiesel using diverse feedstocks
-            including used cooking oil and non-edible oils. Its facilities
-            support scalable and sustainable fuel production.
-          </p>
+      <!-- AXHA BIOENERGY -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture10-DzKvKmrh.png" alt="AXHA Bioenergy" />
         </div>
+        <h3>AXHA BIOENERGY PRIVATE LIMITED</h3>
+        <p>
+          AXHA Bioenergy operates in the renewable energy sector,
+          manufacturing eco-friendly biodiesel using diverse feedstocks
+          including used cooking oil and non-edible oils. Its facilities
+          support scalable and sustainable fuel production.
+        </p>
+      </div>
 
-        <!-- STUDY TOURS INDIA -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture11-BdloT9py.png" alt="Study Tours India" />
-          </div>
-          <h3>STUDY TOURS INDIA</h3>
-          <p>
-            Study Tours India delivers experiential learning through industrial
-            tours, cultural trips, awareness campaigns, and focused workshops.
-            The startup aims to develop practical, creative, and career-oriented
-            skills among students.
-          </p>
+      <!-- STUDY TOURS INDIA -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture11-BdloT9py.png" alt="Study Tours India" />
         </div>
+        <h3>STUDY TOURS INDIA</h3>
+        <p>
+          Study Tours India delivers experiential learning through industrial
+          tours, cultural trips, awareness campaigns, and focused workshops.
+          The startup aims to develop practical, creative, and career-oriented
+          skills among students.
+        </p>
+      </div>
 
-        <!-- URBAN HYPHAE -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture12-DwOwTOks.png" alt="Urban Hyphae" />
-          </div>
-          <h3>URBAN HYPHAE</h3>
-          <p>
-            Urban Hyphae is revolutionizing fashion with sustainable,
-            mushroom-based leather alternatives. The startup combines
-            eco-conscious design with cruelty-free materials to reduce
-            environmental impact while maintaining durability and style.
-          </p>
+      <!-- URBAN HYPHAE -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture12-DwOwTOks.png" alt="Urban Hyphae" />
         </div>
+        <h3>URBAN HYPHAE</h3>
+        <p>
+          Urban Hyphae is revolutionizing fashion with sustainable,
+          mushroom-based leather alternatives. The startup combines
+          eco-conscious design with cruelty-free materials to reduce
+          environmental impact while maintaining durability and style.
+        </p>
+      </div>
 
-        <!-- POWERBOX -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture13-DG6NACa_.png" alt="PowerBox" />
-          </div>
-          <h3>POWERBOX PVT. LTD.</h3>
-          <p>
-            PowerBox offers Battery-as-a-Service (BaaS) solutions that make
-            energy storage affordable and flexible. Users can subscribe to solar
-            systems and EV batteries while reducing upfront costs and ensuring
-            hassle-free maintenance.
-          </p>
+      <!-- POWERBOX -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture13-DG6NACa_.png" alt="PowerBox" />
         </div>
+        <h3>POWERBOX PVT. LTD.</h3>
+        <p>
+          PowerBox offers Battery-as-a-Service (BaaS) solutions that make
+          energy storage affordable and flexible. Users can subscribe to solar
+          systems and EV batteries while reducing upfront costs and ensuring
+          hassle-free maintenance.
+        </p>
+      </div>
 
-        <!-- SMART BLOOM -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture14-BtBtTOwZ.png" alt="Smart Bloom" />
-          </div>
-          <h3>SMART BLOOM</h3>
-          <p>
-            Smart Bloom automates flower pollination using robotics, machine
-            learning, and agricultural science. Built on open-source platforms,
-            the system enhances yield, efficiency, and precision in controlled
-            farming environments.
-          </p>
+      <!-- SMART BLOOM -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture14-BtBtTOwZ.png" alt="Smart Bloom" />
         </div>
+        <h3>SMART BLOOM</h3>
+        <p>
+          Smart Bloom automates flower pollination using robotics, machine
+          learning, and agricultural science. Built on open-source platforms,
+          the system enhances yield, efficiency, and precision in controlled
+          farming environments.
+        </p>
+      </div>
 
-        <!-- PARQ -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture15-DjzObtpp.png" alt="ParQ" />
-          </div>
-          <h3>PARQ PVT. LTD.</h3>
-          <p>
-            ParQ is a smart parking platform that connects drivers with
-            real-time bookable parking spots through mobile and in-car
-            integration. It optimizes urban mobility while reducing fuel
-            consumption and congestion.
-          </p>
+      <!-- PARQ -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture15-DjzObtpp.png" alt="ParQ" />
         </div>
+        <h3>PARQ PVT. LTD.</h3>
+        <p>
+          ParQ is a smart parking platform that connects drivers with
+          real-time bookable parking spots through mobile and in-car
+          integration. It optimizes urban mobility while reducing fuel
+          consumption and congestion.
+        </p>
+      </div>
 
-        <!-- HEALTHLIGENCE -->
-        <div class="startup-card">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture16-CddkGksu.png" alt="Healthligence" />
-          </div>
-          <h3>HEALTHLIGENCE</h3>
-          <p>
-            Healthligence is building a patient-centered EHR system using
-            AI-driven interactions and LLM integration. The platform enables
-            efficient clinical workflows, real-time collaboration, and secure
-            cloud-native healthcare data management.
-          </p>
+      <!-- HEALTHLIGENCE -->
+      <div class="startup-card">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture16-CddkGksu.png" alt="Healthligence" />
         </div>
+        <h3>HEALTHLIGENCE</h3>
+        <p>
+          Healthligence is building a patient-centered EHR system using
+          AI-driven interactions and LLM integration. The platform enables
+          efficient clinical workflows, real-time collaboration, and secure
+          cloud-native healthcare data management.
+        </p>
+      </div>
 
-        <!-- EINIVIE -->
-        <div class="startup-card highlight">
-          <div class="startup-image">
-            <img src="../assets/startupimages/Picture17-lHbSNtko.png" alt="Einivie" />
-          </div>
-          <h3>FRIDAY EVENTS PVT. LTD. – EINIVIE</h3>
-          <p>
-            EINIVIE simplifies event planning by connecting users with verified
-            vendors through a standardized digital platform. The solution offers
-            e-invitations, guest management, live updates, and ticketing for
-            private and public events.
-          </p>
+      <!-- EINIVIE -->
+      <div class="startup-card highlight">
+        <div class="startup-image">
+          <img src="../assets/startupimages/Picture17-lHbSNtko.png" alt="Einivie" />
+        </div>
+        <h3>FRIDAY EVENTS PVT. LTD. – EINIVIE</h3>
+        <p>
+          EINIVIE simplifies event planning by connecting users with verified
+          vendors through a standardized digital platform. The solution offers
+          e-invitations, guest management, live updates, and ticketing for
+          private and public events.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar,
+          Odisha. The university is committed to academic excellence, research innovation and holistic development
+          across multiple professional disciplines.
+        </p>
+        <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University,
+          supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing
+          mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful
+          enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
+        </p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-    </section>
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-      <div class="footer-container">
-        <div class="footer-section about">
-          <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-            Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar, Odisha. The university is committed to academic excellence, research innovation and holistic development across multiple professional disciplines.
-          </p>
-          <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-           AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University, supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
-          </p>
-          <div class="social-icons">
-            <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="footer-section links">
-          <h2 class="footer-heading">Quick Links</h2>
-          <div class="heading-underline"></div>
-          <div class="links-grid">
+      <div class="footer-section links">
+        <h2 class="footer-heading">Quick Links</h2>
+        <div class="heading-underline"></div>
+        <div class="links-grid">
           <ul>
-              <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
-              <li><a href="#">Team</a></li>
-              <li><a href="#">Board Members</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
-              <li><a href= "http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
-            </ul>
-            <ul>
-              <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
-              <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
-              <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
-              <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
-              <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="footer-section contact">
-          <h2 class="footer-heading">Contact Info</h2>
-          <div class="heading-underline"></div>
-          <div class="contact-item">
-            <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
-            751030, Odisha, India
-          </div>
-          <div class="contact-item">
-            <strong>Email:</strong>
-            <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
-          </div>
-          <div class="contact-item">
-            <strong>Phone:</strong>
-            <a href="tel:+919437035905">+91-9437035905</a>,
-            <a href="tel:+9193384625239">+919338462523</a>
-          </div>
+            <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
+            <li><a href="../About us-section/team.html">Team</a></li>
+            <li><a href="../About us-section/board_members.html">Board Members</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
+            <li><a href="http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
+            <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
+            <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
+            <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
+            <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
+          </ul>
         </div>
       </div>
-    </footer>
 
-    <script src="../aic.js"></script>
-  </body>
+      <div class="footer-section contact">
+        <h2 class="footer-heading">Contact Info</h2>
+        <div class="heading-underline"></div>
+        <div class="contact-item">
+          <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
+          751030, Odisha, India
+        </div>
+        <div class="contact-item">
+          <strong>Email:</strong>
+          <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
+        </div>
+        <div class="contact-item">
+          <strong>Phone:</strong>
+          <a href="tel:+919437035905">+91-9437035905</a>,
+          <a href="tel:+9193384625239">+919338462523</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../aic.js"></script>
+</body>
+
 </html>

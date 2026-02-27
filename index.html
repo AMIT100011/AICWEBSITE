@@ -1,269 +1,304 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIC-SOA Foundation</title>
-    <!-- Font Awesome for Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- New Alert Bar Styles -->
-    <style>
-      .alert-row {
-        display: flex;
-        align-items: center;
-        background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%);
-        color: white;
-        height: 45px;
-        font-family: sans-serif;
-        width: 100%;
-        transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-        overflow: hidden;
-      }
-      .alert-row.hidden {
-        height: 0;
-        opacity: 0;
-        padding: 0;
-      }
-      .alert-row .alert-label {
-        background-color: #ff0000;
-        padding: 0 20px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-weight: bold;
-      }
-      .alert-content-area {
-        flex-grow: 1;
-        padding-left: 20px;
-        overflow: hidden;
-        position: relative;
-        height: 100%;
-        display: flex;
-        align-items: center;
-      }
-      .alert-msg {
-        position: absolute;
-        left: 0;
-        color: white;
-        text-decoration: none;
-        font-size: 14px;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateX(20px);
-        transition: opacity 0.4s ease, transform 0.4s ease;
-        white-space: nowrap;
-        pointer-events: none;
-      }
-      .alert-msg.active {
-        opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
-      }
-      .alert-controls {
-        margin-left: auto;
-        display: flex;
-        height: 100%;
-        border-left: 1px solid rgba(255,255,255,0.2);
-      }
-      .alert-controls button {
-        background: transparent;
-        border: none;
-        color: white;
-        padding: 0 15px;
-        cursor: pointer;
-        font-size: 18px;
-        transition: background 0.3s;
-      }
-      .alert-controls button:hover { background: rgba(255,255,255,0.1); }
-      .alert-badge {
-        font-size: 10px;
-        padding: 2px 8px;
-        border-radius: 3px;
-        margin-left: 10px;
-        font-weight: bold;
-        display: inline-block;
-      }
-      .alert-badge.update { background-color: #4caf50; }
-      .alert-badge.new { background-color: #ff9800; }
-      /* Popup Modal */
-      .alert-popup-modal {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        z-index: 10000;
-        display: none;
-      }
-      .alert-popup-modal.active { display: block; }
-      .alert-popup-overlay {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.7);
-      }
-      .alert-popup-container {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border-radius: 12px;
-        max-width: 450px;
-        width: 85%;
-        overflow: hidden;
-        box-shadow: 0 25px 80px rgba(0,0,0,0.4);
-      }
-      .alert-popup-header {
-        background: #3f51b5;
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .alert-popup-title { margin: 0; font-size: 18px; font-weight: 600; }
-      .alert-popup-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 28px;
-        cursor: pointer;
-        line-height: 1;
-      }
-      .alert-popup-body { padding: 0; }
-      .alert-popup-body img { width: 100%; height: auto; display: block; }
-    </style>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./styles/aic.css" />
-  </head>
 
-  <body>
-    <!-- Top Header & Navigation -->
-    <div class="header-top">
-      <header class="navbar">
-        <!-- LEFT: AIC Logo -->
-        <div class="logo-container">
-          <img src="./assets/logos/aiclogo.png" alt="aic" />
-          <div class="logo-text"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIC-SOA Foundation</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- New Alert Bar Styles -->
+  <style>
+    .alert-row {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%);
+      color: white;
+      height: 45px;
+      font-family: sans-serif;
+      width: 100%;
+      transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+
+    .alert-row.hidden {
+      height: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+    .alert-row .alert-label {
+      background-color: #ff0000;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .alert-content-area {
+      flex-grow: 1;
+      padding-left: 20px;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-msg {
+      position: absolute;
+      left: 0;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .alert-msg.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .alert-controls {
+      margin-left: auto;
+      display: flex;
+      height: 100%;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .alert-controls button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 0 15px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    .alert-controls button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .alert-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 10px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .alert-badge.update {
+      background-color: #4caf50;
+    }
+
+    .alert-badge.new {
+      background-color: #ff9800;
+    }
+
+    /* Popup Modal */
+    .alert-popup-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
+      display: none;
+    }
+
+    .alert-popup-modal.active {
+      display: block;
+    }
+
+    .alert-popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .alert-popup-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 85%;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .alert-popup-header {
+      background: #3f51b5;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .alert-popup-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .alert-popup-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .alert-popup-body {
+      padding: 0;
+    }
+
+    .alert-popup-body img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./styles/aic.css" />
+</head>
+
+<body>
+  <!-- Top Header & Navigation -->
+  <div class="header-top">
+    <header class="navbar">
+      <!-- LEFT: AIC Logo -->
+      <div class="logo-container">
+        <img src="./assets/logos/aiclogo.png" alt="aic" />
+        <div class="logo-text"></div>
+      </div>
+
+      <!-- CENTER: NAV LINKS -->
+      <nav class="nav-links">
+        <div class="nav-item">
+          <a href="index.html" class="nav-link">Home</a>
         </div>
 
-        <!-- CENTER: NAV LINKS -->
-        <nav class="nav-links">
-          <div class="nav-item">
-            <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-item">
+          <a href="#" class="nav-link">About Us</a>
+          <div class="dropdown-menu">
+            <a href="./About us-section/founders_desk.html">Founder's Desk</a>
+            <a href="./About us-section/about uss/reach.html">About</a>
+            <a href="./About us-section/board_members.html">Board Members</a>
+            <a href="./About us-section/team.html">Team</a>
+            <a href="./About us-section/our_focus.html">Our Focus</a>
+            <a href="./Pages/Infrastructure.html">Infrastructure</a>
           </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">About Us</a>
-            <div class="dropdown-menu">
-              <a href="./About us-section/founders_desk.html">Founder's Desk</a>
-              <a href="./About us-section/about uss/reach.html">About</a>
-              <a href="#">Board Members</a>
-              <a href="#">Team</a>
-              <a href="./About us-section/our_focus.html">Our Focus</a>
-              <a href="./Pages/Infrastructure.html">Infrastructure</a>
-            </div>
-          </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">Programs</a>
-            <div class="dropdown-menu">
-              <a href="./program_benefits/programs_benefits.html"
-                >Program Benefits</a
-              >
-              <a href="./incubator/incubator.html">Incubator</a>
-              <a href="./virtual_incubator/virtual_incubator.html"
-                >Virtual Incubator</a
-              >
-            </div>
-          </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">Startup Hubs</a>
-            <div class="dropdown-menu">
-              <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer"
-                >Startup India Website</a
-              >
-              <a href="https://startupodisha.gov.in/" target="_blank" rel="noopener noreferrer">Startup Odisha Website</a>
-              <a href="https://aim.gov.in/" target="_blank" rel="noopener noreferrer">Atal Innovation Mission</a>
-              <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer"
-                >Women Empowerment Funds</a
-              >
-              <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer"
-                >Women MSME Policy</a
-              >
-            </div>
-          </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">Community</a>
-            <div class="dropdown-menu">
-              <a href="./Pages/startup.html">Startups</a>
-              <a href="./Pages/mentor.html">Our Mentors</a>
-              <a href="./Pages/partner.html">Partners</a>
-              <a href="./Pages/supported.html">Supported By</a>
-            </div>
-          </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">Resources</a>
-            <div class="dropdown-menu">
-              <a href="./Gallery/gallery.html">Our Gallery</a>
-              <a href="./event_page/events.html">Events</a>
-            </div>
-          </div>
-
-          <div class="nav-item">
-            <a href="#" class="nav-link">Connect</a>
-            <div class="dropdown-menu">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform" target="_blank" rel="noopener noreferrer">Register</a>
-            </div>
-          </div>
-        </nav>
-
-        <!-- RIGHT: GOV LOGOS (🔥 direct child of navbar) -->
-        <div class="gov-logo-group">
-          <img src="Nitiayog-BmYBgTyb.png" alt="NITI Aayog" />
         </div>
-      </header>
 
-      <!-- New Alert Bar -->
-      <div class="alert-row">
-        <div class="alert-label">Alert</div>
-        <div class="alert-content-area" id="alert-msg-container">
-          <a href="#" class="alert-msg active" data-popup="./popup.jpeg" data-title="AI in Education">
-            AI in Education: Revolutionizing Learning Experience.
-            <span class="alert-badge new">NEW</span>
-          </a>
-          <a href="#" class="alert-msg" data-popup="./popup2.jpeg" data-title="Speaker Announcement">
-            Our Eminent Speakers for AI in Education.
-            <span class="alert-badge new">NEW</span>
-          </a>
+        <div class="nav-item">
+          <a href="#" class="nav-link">Programs</a>
+          <div class="dropdown-menu">
+            <a href="./program_benefits/programs_benefits.html">Program Benefits</a>
+            <a href="./incubator/incubator.html">Incubator</a>
+            <a href="./virtual_incubator/virtual_incubator.html">Virtual Incubator</a>
+          </div>
         </div>
-        <div class="alert-controls">
-          <button id="alertPrevBtn" title="Previous">&#10094;</button>
-          <button id="alertNextBtn" title="Next">&#10095;</button>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Startup Hubs</a>
+          <div class="dropdown-menu">
+            <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer">Startup India
+              Website</a>
+            <a href="https://startupodisha.gov.in/" target="_blank" rel="noopener noreferrer">Startup Odisha Website</a>
+            <a href="https://aim.gov.in/" target="_blank" rel="noopener noreferrer">Atal Innovation Mission</a>
+            <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer">Women Empowerment
+              Funds</a>
+            <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer">Women MSME
+              Policy</a>
+          </div>
         </div>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Community</a>
+          <div class="dropdown-menu">
+            <a href="./Pages/startup.html">Startups</a>
+            <a href="./Pages/mentor.html">Our Mentors</a>
+            <a href="./Pages/partner.html">Partners</a>
+            <a href="./Pages/supported.html">Supported By</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Resources</a>
+          <div class="dropdown-menu">
+            <a href="./Gallery/gallery.html">Our Gallery</a>
+            <a href="./event_page/events.html">Events</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Connect</a>
+          <div class="dropdown-menu">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform"
+              target="_blank" rel="noopener noreferrer">Register</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- RIGHT: GOV LOGOS (🔥 direct child of navbar) -->
+      <div class="gov-logo-group">
+        <img src="Nitiayog-BmYBgTyb.png" alt="NITI Aayog" />
+      </div>
+    </header>
+
+    <!-- New Alert Bar -->
+    <div class="alert-row">
+      <div class="alert-label">Alert</div>
+      <div class="alert-content-area" id="alert-msg-container">
+        <a href="#" class="alert-msg active" data-popup="./popup.jpeg" data-title="AI in Education">
+          AI in Education: Revolutionizing Learning Experience.
+          <span class="alert-badge new">NEW</span>
+        </a>
+        <a href="#" class="alert-msg" data-popup="./popup2.jpeg" data-title="Speaker Announcement">
+          Our Eminent Speakers for AI in Education.
+          <span class="alert-badge new">NEW</span>
+        </a>
+      </div>
+      <div class="alert-controls">
+        <button id="alertPrevBtn" title="Previous">&#10094;</button>
+        <button id="alertNextBtn" title="Next">&#10095;</button>
       </div>
     </div>
+  </div>
 
-    <!-- Alert Popup Modal -->
-    <div class="alert-popup-modal">
-      <div class="alert-popup-overlay"></div>
-      <div class="alert-popup-container">
-        <div class="alert-popup-header">
-          <h3 class="alert-popup-title">Announcement</h3>
-          <button class="alert-popup-close">&times;</button>
-        </div>
-        <div class="alert-popup-body">
-          <img src="" alt="Announcement" />
-        </div>
+  <!-- Alert Popup Modal -->
+  <div class="alert-popup-modal">
+    <div class="alert-popup-overlay"></div>
+    <div class="alert-popup-container">
+      <div class="alert-popup-header">
+        <h3 class="alert-popup-title">Announcement</h3>
+        <button class="alert-popup-close">&times;</button>
+      </div>
+      <div class="alert-popup-body">
+        <img src="" alt="Announcement" />
       </div>
     </div>
+  </div>
 
-    <script>
-    (function() {
+  <script>
+    (function () {
       const messages = document.querySelectorAll('.alert-msg');
       const container = document.getElementById('alert-msg-container');
       const prevBtn = document.getElementById('alertPrevBtn');
@@ -349,872 +384,801 @@
         }
       }, { passive: true });
     })();
-    </script>
+  </script>
 
-    <!-- Essential JavaScript for mobile menu and site functionality -->
-    <script>
-      // Mobile Menu Functionality
-      document.addEventListener('DOMContentLoaded', () => {
-        const navbar = document.querySelector('.navbar');
-        if (!navbar) return;
+  <!-- Essential JavaScript for mobile menu and site functionality -->
+  <script>
+    // Mobile Menu Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const navbar = document.querySelector('.navbar');
+      if (!navbar) return;
 
-        // Create mobile menu button if it doesn't exist
-        let menuBtn = document.querySelector('.menu-toggle');
-        if (!menuBtn) {
-          menuBtn = document.createElement('button');
-          menuBtn.className = 'menu-toggle';
-          menuBtn.setAttribute('aria-label', 'Toggle menu');
-          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-          navbar.appendChild(menuBtn);
+      // Create mobile menu button if it doesn't exist
+      let menuBtn = document.querySelector('.menu-toggle');
+      if (!menuBtn) {
+        menuBtn = document.createElement('button');
+        menuBtn.className = 'menu-toggle';
+        menuBtn.setAttribute('aria-label', 'Toggle menu');
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        navbar.appendChild(menuBtn);
+      }
+
+      // Create mobile menu overlay and panel
+      let overlay = document.querySelector('.mobile-menu-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        document.body.appendChild(overlay);
+      }
+
+      let panel = document.querySelector('.mobile-menu');
+      if (!panel) {
+        panel = document.createElement('aside');
+        panel.className = 'mobile-menu';
+        panel.innerHTML = '<nav class="mobile-nav"></nav>';
+        document.body.appendChild(panel);
+
+        // Clone navigation items
+        const mobileNav = panel.querySelector('.mobile-nav');
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks && mobileNav) {
+          const items = Array.from(navLinks.querySelectorAll('.nav-item'));
+          items.forEach(item => {
+            const trigger = item.querySelector('.nav-link');
+            const dropdown = item.querySelector('.dropdown-menu');
+            const label = trigger ? trigger.textContent.trim() : '';
+
+            if (dropdown) {
+              const header = document.createElement('button');
+              header.className = 'mobile-accordion-header';
+              header.innerHTML = `<span>${label}</span><span class="chev">▸</span>`;
+              mobileNav.appendChild(header);
+
+              const panelDiv = document.createElement('div');
+              panelDiv.className = 'mobile-accordion-panel';
+              dropdown.querySelectorAll('a').forEach(sa => {
+                const subLink = sa.cloneNode(true);
+                subLink.classList.add('mobile-sublink');
+                panelDiv.appendChild(subLink);
+              });
+              mobileNav.appendChild(panelDiv);
+
+              header.addEventListener('click', () => {
+                const expanded = header.classList.toggle('expanded');
+                if (expanded) panelDiv.classList.add('open');
+                else panelDiv.classList.remove('open');
+              });
+            } else if (trigger) {
+              const a = trigger.cloneNode(true);
+              mobileNav.appendChild(a);
+            }
+          });
         }
+      }
 
-        // Create mobile menu overlay and panel
-        let overlay = document.querySelector('.mobile-menu-overlay');
-        if (!overlay) {
-          overlay = document.createElement('div');
-          overlay.className = 'mobile-menu-overlay';
-          document.body.appendChild(overlay);
-        }
+      // Menu toggle functionality
+      const openMenu = () => {
+        menuBtn.classList.add('open');
+        menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+        panel.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
 
-        let panel = document.querySelector('.mobile-menu');
-        if (!panel) {
-          panel = document.createElement('aside');
-          panel.className = 'mobile-menu';
-          panel.innerHTML = '<nav class="mobile-nav"></nav>';
-          document.body.appendChild(panel);
+      const closeMenu = () => {
+        menuBtn.classList.remove('open');
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        panel.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      };
 
-          // Clone navigation items
-          const mobileNav = panel.querySelector('.mobile-nav');
-          const navLinks = document.querySelector('.nav-links');
-          if (navLinks && mobileNav) {
-            const items = Array.from(navLinks.querySelectorAll('.nav-item'));
-            items.forEach(item => {
-              const trigger = item.querySelector('.nav-link');
-              const dropdown = item.querySelector('.dropdown-menu');
-              const label = trigger ? trigger.textContent.trim() : '';
-
-              if (dropdown) {
-                const header = document.createElement('button');
-                header.className = 'mobile-accordion-header';
-                header.innerHTML = `<span>${label}</span><span class="chev">▸</span>`;
-                mobileNav.appendChild(header);
-
-                const panelDiv = document.createElement('div');
-                panelDiv.className = 'mobile-accordion-panel';
-                dropdown.querySelectorAll('a').forEach(sa => {
-                  const subLink = sa.cloneNode(true);
-                  subLink.classList.add('mobile-sublink');
-                  panelDiv.appendChild(subLink);
-                });
-                mobileNav.appendChild(panelDiv);
-
-                header.addEventListener('click', () => {
-                  const expanded = header.classList.toggle('expanded');
-                  if (expanded) panelDiv.classList.add('open');
-                  else panelDiv.classList.remove('open');
-                });
-              } else if (trigger) {
-                const a = trigger.cloneNode(true);
-                mobileNav.appendChild(a);
-              }
-            });
-          }
-        }
-
-        // Menu toggle functionality
-        const openMenu = () => {
-          menuBtn.classList.add('open');
-          menuBtn.innerHTML = '<i class="fas fa-times"></i>';
-          panel.classList.add('open');
-          overlay.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        };
-
-        const closeMenu = () => {
-          menuBtn.classList.remove('open');
-          menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-          panel.classList.remove('open');
-          overlay.classList.remove('open');
-          document.body.style.overflow = '';
-        };
-
-        menuBtn.addEventListener('click', () => {
-          if (panel.classList.contains('open')) closeMenu();
-          else openMenu();
-        });
-
-        overlay.addEventListener('click', closeMenu);
-        panel.addEventListener('click', (e) => {
-          if (e.target.closest('a')) closeMenu();
-        });
-
-        // Close on window resize
-        window.addEventListener('resize', () => {
-          if (window.innerWidth > 768 && panel.classList.contains('open')) closeMenu();
-        });
-
-        // Dropdown behavior for desktop
-        document.querySelectorAll('.nav-item').forEach(item => {
-          const link = item.querySelector('.nav-link');
-          const dropdown = item.querySelector('.dropdown-menu');
-          if (link && dropdown) {
-            link.addEventListener('click', (e) => {
-              if (window.innerWidth > 768) {
-                e.preventDefault();
-                const opened = item.classList.toggle('open');
-                if (opened) {
-                  document.querySelectorAll('.nav-item').forEach(i => {
-                    if (i !== item) i.classList.remove('open');
-                  });
-                }
-              }
-            });
-          }
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!e.target.closest('.nav-item')) {
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
-          }
-        });
-
-        // Navbar scroll behavior
-        const headerTop = document.querySelector('.header-top');
-        const alertBar = document.querySelector('.alert-bar');
-
-        const updateNavbarState = () => {
-          if (window.scrollY <= 5) {
-            navbar.classList.remove('navbar--scrolled');
-            if (headerTop) headerTop.classList.remove('header-top--scrolled');
-            if (alertBar) alertBar.classList.remove('alert-bar--hidden');
-          } else {
-            navbar.classList.add('navbar--scrolled');
-            if (headerTop) headerTop.classList.add('header-top--scrolled');
-            if (alertBar) alertBar.classList.add('alert-bar--hidden');
-          }
-        };
-
-        window.addEventListener('scroll', updateNavbarState, { passive: true });
-        updateNavbarState();
+      menuBtn.addEventListener('click', () => {
+        if (panel.classList.contains('open')) closeMenu();
+        else openMenu();
       });
-    </script>
 
-    <!-- Hero Section with Video Background -->
-    <section class="hero">
-      <div class="hero-video-container">
-        <video autoplay muted loop playsinline class="hero-video">
-          <source src="herovideo.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-      </div>
-      <div class="hero-content">
-        <h1 class="hero-title">AIC- SOA FOUNDATION</h1>
-        <p class="hero-sub">
-          Atal Incubation Centre at Siksha 'O' Anusandhan <br />
-          <span class="hero-aegis">under agies of</span>
-          NITI Aayog, Govt. of India
-        </p>
-      </div>
-    </section>
+      overlay.addEventListener('click', closeMenu);
+      panel.addEventListener('click', (e) => {
+        if (e.target.closest('a')) closeMenu();
+      });
 
-    <!-- Events Section (Upcoming & Past) -->
-    <section class="events-section">
-      <div class="section-header">
-        <h2>Our Events</h2>
-        <div class="header-underline"></div>
-      </div>
-      <div class="events-container">
-        <!-- Upcoming Events Column -->
-        <div class="events-column">
-          <div class="column-header">
-            <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
-            <div class="column-controls">
-              <button class="event-scroll-btn" onclick="scrollColumn('upcoming', -1)"><i class="fas fa-chevron-up"></i></button>
-              <button class="event-scroll-btn" onclick="scrollColumn('upcoming', 1)"><i class="fas fa-chevron-down"></i></button>
-            </div>
-          </div>
-          <div class="events-list scrollable-list" id="upcoming-events">
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">25</span>
-                <span class="month">FEB</span>
-              </div>
-              <div class="event-info">
-                <h4>Health-Tech Innovation Summit</h4>
-                <p><i class="fas fa-map-marker-alt"></i> AIC-SOA Ground Floor</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">05</span>
-                <span class="month">MAR</span>
-              </div>
-              <div class="event-info">
-                <h4>Agri-Tech Startup Expo</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Virtual Session</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">12</span>
-                <span class="month">MAR</span>
-              </div>
-              <div class="event-info">
-                <h4>Mentorship Circle: Pitch Perfect</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Conference Room A</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">20</span>
-                <span class="month">MAR</span>
-              </div>
-              <div class="event-info">
-                <h4>Clean-Tech Funding Rounds</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Main Auditorium</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">28</span>
-                <span class="month">MAR</span>
-              </div>
-              <div class="event-info">
-                <h4>Deep-Tech Research Symposium</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Research Wing B</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">05</span>
-                <span class="month">APR</span>
-              </div>
-              <div class="event-info">
-                <h4>Fin-Tech Disruptors Meetup</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Innovation Hub</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">15</span>
-                <span class="month">APR</span>
-              </div>
-              <div class="event-info">
-                <h4>Startup India Seed Fund Day</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Main Hall</p>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-date">
-                <span class="day">22</span>
-                <span class="month">APR</span>
-              </div>
-              <div class="event-info">
-                <h4>AI & Ethics Webinar</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Online Only</p>
-              </div>
-            </div>
+      // Close on window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && panel.classList.contains('open')) closeMenu();
+      });
+
+      // Dropdown behavior for desktop
+      document.querySelectorAll('.nav-item').forEach(item => {
+        const link = item.querySelector('.nav-link');
+        const dropdown = item.querySelector('.dropdown-menu');
+        if (link && dropdown) {
+          link.addEventListener('click', (e) => {
+            if (window.innerWidth > 768) {
+              e.preventDefault();
+              const opened = item.classList.toggle('open');
+              if (opened) {
+                document.querySelectorAll('.nav-item').forEach(i => {
+                  if (i !== item) i.classList.remove('open');
+                });
+              }
+            }
+          });
+        }
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item')) {
+          document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
+        }
+      });
+
+      // Navbar scroll behavior
+      const headerTop = document.querySelector('.header-top');
+      const alertBar = document.querySelector('.alert-bar');
+
+      const updateNavbarState = () => {
+        if (window.scrollY <= 5) {
+          navbar.classList.remove('navbar--scrolled');
+          if (headerTop) headerTop.classList.remove('header-top--scrolled');
+          if (alertBar) alertBar.classList.remove('alert-bar--hidden');
+        } else {
+          navbar.classList.add('navbar--scrolled');
+          if (headerTop) headerTop.classList.add('header-top--scrolled');
+          if (alertBar) alertBar.classList.add('alert-bar--hidden');
+        }
+      };
+
+      window.addEventListener('scroll', updateNavbarState, { passive: true });
+      updateNavbarState();
+    });
+  </script>
+
+  <!-- Hero Section with Video Background -->
+  <section class="hero">
+    <div class="hero-video-container">
+      <video autoplay muted loop playsinline class="hero-video">
+        <source src="herovideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">AIC- SOA FOUNDATION</h1>
+      <p class="hero-sub">
+        Atal Incubation Centre at Siksha 'O' Anusandhan <br />
+        <span class="hero-aegis">under agies of</span>
+        NITI Aayog, Govt. of India
+      </p>
+    </div>
+  </section>
+
+  <!-- Events Section (Upcoming & Past) -->
+  <section class="events-section">
+    <div class="section-header">
+      <h2>Our Events</h2>
+      <div class="header-underline"></div>
+    </div>
+    <div class="events-container">
+      <!-- Upcoming Events Column -->
+      <div class="events-column">
+        <div class="column-header">
+          <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+          <div class="column-controls">
+            <button class="event-scroll-btn" onclick="scrollColumn('upcoming', -1)"><i
+                class="fas fa-chevron-up"></i></button>
+            <button class="event-scroll-btn" onclick="scrollColumn('upcoming', 1)"><i
+                class="fas fa-chevron-down"></i></button>
           </div>
         </div>
-
-        <!-- Past Events Column -->
-        <div class="events-column">
-          <div class="column-header">
-            <h3><i class="fas fa-history"></i> Past Events</h3>
-            <div class="column-controls">
-              <button class="event-scroll-btn" onclick="scrollColumn('past', -1)"><i class="fas fa-chevron-up"></i></button>
-              <button class="event-scroll-btn" onclick="scrollColumn('past', 1)"><i class="fas fa-chevron-down"></i></button>
+        <div class="events-list scrollable-list" id="upcoming-events">
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">25</span>
+              <span class="month">FEB</span>
+            </div>
+            <div class="event-info">
+              <h4>Health-Tech Innovation Summit</h4>
+              <p><i class="fas fa-map-marker-alt"></i> AIC-SOA Ground Floor</p>
             </div>
           </div>
-          <div class="events-list scrollable-list" id="past-events">
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">10</span>
-                <span class="month">JAN</span>
-              </div>
-              <div class="event-info">
-                <h4>AI in Education Workshop</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">MAR</span>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">22</span>
-                <span class="month">DEC</span>
-              </div>
-              <div class="event-info">
-                <h4>Global Startup Conclave</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+            <div class="event-info">
+              <h4>Agri-Tech Startup Expo</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Virtual Session</p>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">05</span>
-                <span class="month">DEC</span>
-              </div>
-              <div class="event-info">
-                <h4>Clean Energy Demo Day</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">12</span>
+              <span class="month">MAR</span>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">15</span>
-                <span class="month">NOV</span>
-              </div>
-              <div class="event-info">
-                <h4>Investor Meet: Q4 2025</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+            <div class="event-info">
+              <h4>Mentorship Circle: Pitch Perfect</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Conference Room A</p>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">02</span>
-                <span class="month">NOV</span>
-              </div>
-              <div class="event-info">
-                <h4>Cybersecurity Bootcamp</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">20</span>
+              <span class="month">MAR</span>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">18</span>
-                <span class="month">OCT</span>
-              </div>
-              <div class="event-info">
-                <h4>Social Entrepreneurship Day</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+            <div class="event-info">
+              <h4>Clean-Tech Funding Rounds</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Main Auditorium</p>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">05</span>
-                <span class="month">OCT</span>
-              </div>
-              <div class="event-info">
-                <h4>IPR and Patenting Seminar</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">28</span>
+              <span class="month">MAR</span>
             </div>
-            <div class="event-card past">
-              <div class="event-date">
-                <span class="day">20</span>
-                <span class="month">SEP</span>
-              </div>
-              <div class="event-info">
-                <h4>Hackerathon 2025</h4>
-                <p><i class="fas fa-check-circle"></i> Completed</p>
-              </div>
+            <div class="event-info">
+              <h4>Deep-Tech Research Symposium</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Research Wing B</p>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">APR</span>
+            </div>
+            <div class="event-info">
+              <h4>Fin-Tech Disruptors Meetup</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Innovation Hub</p>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">15</span>
+              <span class="month">APR</span>
+            </div>
+            <div class="event-info">
+              <h4>Startup India Seed Fund Day</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Main Hall</p>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">22</span>
+              <span class="month">APR</span>
+            </div>
+            <div class="event-info">
+              <h4>AI & Ethics Webinar</h4>
+              <p><i class="fas fa-map-marker-alt"></i> Online Only</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Partners Logo Section -->
-    <section class="logo-section partners">
-      <h2>PARTNERS</h2>
-      <p>Leading Institutions and Organizations</p>
-      <div class="marquee-container">
-        <div class="marquee-content">
-          <img
-            src="./assets/PartnerImages/icarcuttack-BMrTpiL1.png"
-            alt="NRRI"
-          />
-          <img src="./assets/PartnerImages/icmr-D3Sc-ZsM.png" alt="RMRC" />
-          <img
-            src="./assets/PartnerImages/iitguwahati-CFETscmB.png"
-            alt="IIT"
-          />
-          <img src="./assets/PartnerImages/jio-IwmycTSP.png" alt="Jio" />
-          <img src="./assets/PartnerImages/nitdelhi-B-aA7R4N.png" alt="NITD" />
-          <img src="./assets/PartnerImages/stpi-GgkPk2zu.png" alt="STPI" />
-          <img src="./assets/PartnerImages/rebacca-CQvCFeZw.png" alt="Rebaca" />
-          <!-- Duplicate set for seamless loop -->
-          <img
-            src="./assets/PartnerImages/icarcuttack-BMrTpiL1.png"
-            alt="NRRI"
-          />
-          <img src="./assets/PartnerImages/icmr-D3Sc-ZsM.png" alt="RMRC" />
-          <img
-            src="./assets/PartnerImages/iitguwahati-CFETscmB.png"
-            alt="IIT"
-          />
-          <img src="./assets/PartnerImages/jio-IwmycTSP.png" alt="Jio" />
-        </div>
-      </div>
-      <a href="#" class="btn-purple">LEARN MORE ABOUT PARTNERS</a>
-    </section>
-
-    <!-- Startups Onboarded Section -->
-    <section class="logo-section startups">
-      <h2>STARTUPS ONBOARDED</h2>
-      <p>Where vision meets innovation</p>
-      <div class="startups-display-outer">
-        <div class="marquee-container reverse">
-          <div class="marquee-content">
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture1-CnZitwGM.png"
-                alt="Plantery"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img src="./assets/startupimages/Picture2-Da7PfdAM.png" alt="driEV" />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture3-CM2603tC.png"
-                alt="Eminent"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture4-6zIjylLZ.png"
-                alt="Photo"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture5-Be9iqzBd.png"
-                alt="Solar"
-              />
-            </div>
-            <!-- Duplicate set for loop -->
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture6-B7vMOLkM.png"
-                alt="Plantery"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture7-CGa24AsB.png"
-                alt="driEV"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture8-J8cKndRq.png"
-                alt="Eminent"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture9-So3Wtcmg.png"
-                alt="Plantery"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture10-DzKvKmrh.png"
-                alt="driEV"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture11-BdloT9py.png"
-                alt="URBAN HYPAEA"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture13-DG6NACa_.png"
-                alt="Plantery"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture14-BtBtTOwZ.png"
-                alt="driEV"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture15-DjzObtpp.png"
-                alt="Eminent"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture16-CddkGksu.png"
-                alt="Plantery"
-              />
-            </div>
-            <div class="startup-logo-card">
-              <img
-                src="./assets/startupimages/Picture17-lHbSNtko.png"
-                alt="driEV"
-              />
-            </div>
+      <!-- Past Events Column -->
+      <div class="events-column">
+        <div class="column-header">
+          <h3><i class="fas fa-history"></i> Past Events</h3>
+          <div class="column-controls">
+            <button class="event-scroll-btn" onclick="scrollColumn('past', -1)"><i
+                class="fas fa-chevron-up"></i></button>
+            <button class="event-scroll-btn" onclick="scrollColumn('past', 1)"><i
+                class="fas fa-chevron-down"></i></button>
           </div>
         </div>
-      </div>
-      <a href="#" class="btn-purple">LEARN MORE ABOUT STARTUPS</a>
-    </section>
-
-    <!-- Saga (Carousel) -->
-    <section class="saga-section">
-      <div class="saga-container">
-        <div class="saga-text">
-          <h1>Saga</h1>
-          <div class="saga-item">
-            <h3>Collaborative Ecosystem</h3>
-            <p>
-              We facilitate direct connections between mentors, industry
-              leaders, and partners with startups, creating a vibrant support
-              network that nurtures growth and collaboration.
-            </p>
-          </div>
-          <div class="saga-item">
-            <h3>Expertise</h3>
-            <p>
-              Our partnerships with renowned research institutions and
-              innovation hubs enable us to access a broad spectrum of knowledge
-              and technical expertise.
-            </p>
-          </div>
-          <div class="saga-item">
-            <h3>Innovation</h3>
-            <p>
-              We foster a culture of ongoing experimentation and adaptability,
-              encouraging new ideas and solutions to meet the ever-changing
-              challenges.
-            </p>
-          </div>
-          <div class="saga-item">
-            <h3>Mentorship</h3>
-            <p>
-              We provide comprehensive mentorship programs that address various
-              aspects of startup development, including business strategy and
-              market entry.
-            </p>
-          </div>
-        </div>
-        <div class="saga-slider-container">
-          <div class="saga-slides" id="sagaSlides">
-            <img src="./assets/Saga/img1.jpg" class="active" alt="Saga 1" />
-            <img src="./assets/Saga/img2.jpg" alt="Saga 2" />
-            <img src="./assets/Saga/img3.jpg" alt="Saga 3" />
-            <img src="./assets/Saga/img4.png" alt="Saga 4" />
-            <img src="./assets/Saga/img5.jpg" alt="Saga 5" />
-            <img src="./assets/Saga/img6.jpg" alt="Saga 6" />
-            <img src="./assets/Saga/img7.jpg" alt="Saga 7" />
-            <img src="./assets/Saga/img8.jpg" alt="Saga 8" />
-          </div>
-
-          <div class="slider-nav">
-            <button onclick="changeSaga(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button onclick="changeSaga(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Innovation Stats (Nation Building) -->
-    <section class="innovation-section">
-      <h1>Innovation for Nation Building</h1>
-      <div class="stats-container">
-        <div class="stat-card">
-          <i class="fas fa-users"></i>
-          <h2 class="counter" data-target="18">0</h2>
-          <p>NUMBER OF STARTUPS</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <h2 class="counter" data-target="23">0</h2>
-          <p>NUMBER OF MENTORS</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-calendar-alt"></i>
-          <h2 class="counter" data-target="15">0</h2>
-          <p>NUMBER OF EVENTS</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-tools"></i>
-          <h2 class="counter" data-target="5">0</h2>
-          <p>NUMBER OF WORKSHOPS</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Expert Reviews Section -->
-    <section class="expert-reviews-section">
-      <h1>Expert Reviews</h1>
-
-      <div class="expert-slider-outer">
-        <div id="expertCard" class="expert-card">
-          <!-- LEFT PROFILE -->
-          <div class="expert-profile-side">
-            <div class="img-wrap">
-              <img
-                src="./assets/expert-review/bksahu-BnY5GmXA.jpg"
-                id="expertPic"
-                alt="Expert"
-              />
+        <div class="events-list scrollable-list" id="past-events">
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">10</span>
+              <span class="month">JAN</span>
             </div>
-
-            <h3 id="expertName">Dr. Bijay Kumar Sahu</h3>
-            <p class="designation">HEAD-NRDC OUTREACH OFFICE</p>
-            <p class="org" id="expertOrg">Govt of India</p>
-
-            <div class="expert-profile-btns">
-              <!-- VIDEO BUTTON -->
-              <a
-                href="#"
-                class="expert-btn expert-video-btn"
-                data-video="https://www.youtube.com/embed/VIDEO_ID"
-              >
-                <i class="fas fa-play"></i> Video
-              </a>
-
-              <!-- LINKEDIN BUTTON -->
-              <a href="https://linkedin.com" target="_blank" class="expert-btn">
-                <i class="fab fa-linkedin"></i> LinkedIn
-              </a>
+            <div class="event-info">
+              <h4>AI in Education Workshop</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
             </div>
           </div>
-
-          <!-- RIGHT CONTENT -->
-          <div class="expert-content-side">
-            <span class="quote-mark">"</span>
-            <p class="expert-testimonial" id="expertQuote">
-              Connecting research lab technology to practical use, uniting
-              stakeholders to foster entrepreneurship, innovation for societal
-              benefits, aligns with India's vision and values.
-            </p>
-          </div>
-        </div>
-
-        <!-- NAVIGATION -->
-        <div class="expert-nav-controls">
-          <button class="nav-circle" onclick="changeExpert(-1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-
-          <div class="nav-dots" id="expertDots"></div>
-
-          <button class="nav-circle" onclick="changeExpert(1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials Slider (Infinite) -->
-    <section class="testimonials-section">
-      <h1>Testimonials</h1>
-      <div class="testi-container">
-        <div class="testi-wrapper">
-          <div class="testi-track" id="testiTrack">
-            <!-- Cards 1-9 -->
-            <div class="testi-card">
-              <div class="testi-img">
-                <img src="./assets/TESTIMONIALS/Driev-1PWIyMXq.jpg" alt="AP" />
-              </div>
-              <p class="testi-quote">
-                "driEV is a clean mobility startup revolutionizing urban
-                commuting with eco-friendly e-bike sharing solutions. With a
-                fleet of over 1,100 vehicles, the company has established itself
-                as a pioneer in sustainable urban commute. Lets driEV operates
-                13 community stations across Bhubaneswar and is expanding into
-                Bengaluru, offering affordable and convenient mobility solutions
-                tailored for urban."
-              </p>
-              <h4 class="testi-name">Mr. Ankur Patel</h4>
-              <span class="testi-title">Founder, LETS DRIEV</span>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">22</span>
+              <span class="month">DEC</span>
             </div>
-            <div class="testi-card">
-              <div class="testi-img">
-                <img src="./assets/TESTIMONIALS/asima-BJXWNaaJ.jpg" alt="AP" />
-              </div>
-              <p class="testi-quote">
-                "PhotoSpIMeDx, a MedTech startup, bridges India's diagnostic gap
-                with accessible and affordable solutions. We specialize in early
-                cancer detection using advanced optical techniques, creating
-                portable and rapid tools to make quality healthcare a universal
-                right and empower healthcare providers with real-time assessment
-                capabilities."
-              </p>
-              <h4 class="testi-name">Dr. Asima Pradhan</h4>
-              <span class="testi-title">Founder, PHOTOSPIMEDX</span>
+            <div class="event-info">
+              <h4>Global Startup Conclave</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
             </div>
-            <div class="testi-card">
-              <div class="testi-img">
-                <img src="./assets/TESTIMONIALS/hydro-C-B52VSJ.jpeg" alt="AM" />
-              </div>
-              <p class="testi-quote">
-                "At Hydro Valley, we believe that what you consume should
-                nourish not just the body, but the soul. Pure, fresh, and
-                sustainable—goodness delivered from Farm to Fork."
-              </p>
-              <h4 class="testi-name">Mr. Ashish Mohanty</h4>
-              <span class="testi-title"
-                >Founder & Chief Farmer , HYDROVELLEY PVT LTD</span
-              >
+          </div>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">DEC</span>
             </div>
-            <div class="testi-card">
-              <div class="testi-img">
-                <img src="./assets/TESTIMONIALS/spkmak-BcWyiGD_.jpg" alt="AM" />
-              </div>
-              <p class="testi-quote">
-                ""SPK MAK offers end-to-end product solutions through two
-                models: Engineering Services and Original Design Manufacturing
-                (ODM). The company provides everything from design and AI
-                integration to in-house development of products that global
-                clients can market under their own brand, effectively bridging
-                the gap from concept to market." "
-              </p>
-              <h4 class="testi-name">Mr. Dhrutidhara Behera</h4>
-              <span class="testi-title"
-                >Founder & Director, SPK-MAK TECHNOLOGIES</span
-              >
+            <div class="event-info">
+              <h4>Clean Energy Demo Day</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
             </div>
-            <div class="testi-card">
-              <div class="testi-img">
-                <img
-                  src="./assets/TESTIMONIALS/Abhishek-C6VvNhVo.jpeg"
-                  alt="AM"
-                />
-              </div>
-              <p class="testi-quote">
-                "As a proud student of the Agriculture College at SOA
-                University, we designed an innovative plant-based energy storage
-                device aimed at promoting sustainable energy solutions. This
-                startup got mentorship and technological support provided by AIC
-                SOA University, where I gained invaluable exposure to
-                cutting-edge technology, industry connections, and real-world
-                expertise."
-              </p>
-              <h4 class="testi-name">Mr. Abhishek Mohapatra</h4>
-              <span class="testi-title">Founder & CEO, PLANTERY</span>
+          </div>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">15</span>
+              <span class="month">NOV</span>
             </div>
-            <div class="testi-card">
-              <div class="testi-img">
-                <img
-                  src="./assets/TESTIMONIALS/Arjyesh-DPFvxSwi.jpeg"
-                  alt="AM"
-                />
-              </div>
-              <p class="testi-quote">
-                "At EVspeer, we are building a revolutionary on-demand EV
-                charging platform that connects drivers in need with nearby EV
-                users, charging stations, or our mobile chargers. By leveraging
-                V2V technology and a community-driven approach, we ensure EV
-                charging is seamless, accessible, and reliable wherever you
-                are."
-              </p>
-              <h4 class="testi-name">Mr. Ashish Mohanty</h4>
-              <span class="testi-title">Founder & CEO , VSPEER PVT LTD</span>
+            <div class="event-info">
+              <h4>Investor Meet: Q4 2025</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
             </div>
-            <!-- Add more cards as needed -->
           </div>
-        </div>
-        <div class="testi-nav">
-          <button class="testi-arrow" onclick="moveTesti(-1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="testi-arrow" onclick="moveTesti(1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Footer -->
-    <!-- FOOTER -->
-    <footer class="main-footer">
-      <div class="footer-container">
-        <div class="footer-section about">
-          <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-            Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar, Odisha. The university is committed to academic excellence, research innovation and holistic development across multiple professional disciplines.
-          </p>
-          <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-           AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University, supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
-          </p>
-          <div class="social-icons">
-            <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">02</span>
+              <span class="month">NOV</span>
+            </div>
+            <div class="event-info">
+              <h4>Cybersecurity Bootcamp</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
+            </div>
           </div>
-        </div>
-
-        <div class="footer-section links">
-          <h2 class="footer-heading">Quick Links</h2>
-          <div class="heading-underline"></div>
-          <div class="links-grid">
-          <ul>
-              <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
-              <li><a href="#">Team</a></li>
-              <li><a href="#">Board Members</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
-              <li><a href= "http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
-            </ul>
-            <ul>
-              <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
-              <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
-              <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
-              <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
-              <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
-            </ul>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">18</span>
+              <span class="month">OCT</span>
+            </div>
+            <div class="event-info">
+              <h4>Social Entrepreneurship Day</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
+            </div>
           </div>
-        </div>
-
-        <div class="footer-section contact">
-          <h2 class="footer-heading">Contact Info</h2>
-          <div class="heading-underline"></div>
-          <div class="contact-item">
-            <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
-            751030, Odisha, India
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">OCT</span>
+            </div>
+            <div class="event-info">
+              <h4>IPR and Patenting Seminar</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
+            </div>
           </div>
-          <div class="contact-item">
-            <strong>Email:</strong>
-            <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
+          <div class="event-card past">
+            <div class="event-date">
+              <span class="day">20</span>
+              <span class="month">SEP</span>
+            </div>
+            <div class="event-info">
+              <h4>Hackerathon 2025</h4>
+              <p><i class="fas fa-check-circle"></i> Completed</p>
+            </div>
           </div>
-          <div class="contact-item">
-            <strong>Phone:</strong>
-            <a href="tel:+919437035905">+91-9437035905</a>,
-            <a href="tel:+9193384625239">+919338462523</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- test push-->
-    <!-- Expert Video Modal -->
-    <div class="expert-video-modal" id="expertVideoModal">
-      <div class="expert-video-overlay"></div>
-
-      <div class="expert-video-box">
-        <button class="expert-video-close">&times;</button>
-        <div class="expert-video-wrapper">
-          <iframe
-            id="expertVideoFrame"
-            src=""
-            title="Expert Review Video"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-          >
-          </iframe>
         </div>
       </div>
     </div>
-    <!-- Expert Video Modal JS -->
+  </section>
 
-    <!-- Main JS for carousels, counters, etc. -->
-    <script src="./aic.js"></script>
+  <!-- Partners Logo Section -->
+  <section class="logo-section partners">
+    <h2>PARTNERS</h2>
+    <p>Leading Institutions and Organizations</p>
+    <div class="marquee-container">
+      <div class="marquee-content">
+        <img src="./assets/PartnerImages/icarcuttack-BMrTpiL1.png" alt="NRRI" />
+        <img src="./assets/PartnerImages/icmr-D3Sc-ZsM.png" alt="RMRC" />
+        <img src="./assets/PartnerImages/iitguwahati-CFETscmB.png" alt="IIT" />
+        <img src="./assets/PartnerImages/jio-IwmycTSP.png" alt="Jio" />
+        <img src="./assets/PartnerImages/nitdelhi-B-aA7R4N.png" alt="NITD" />
+        <img src="./assets/PartnerImages/stpi-GgkPk2zu.png" alt="STPI" />
+        <img src="./assets/PartnerImages/rebacca-CQvCFeZw.png" alt="Rebaca" />
+        <!-- Duplicate set for seamless loop -->
+        <img src="./assets/PartnerImages/icarcuttack-BMrTpiL1.png" alt="NRRI" />
+        <img src="./assets/PartnerImages/icmr-D3Sc-ZsM.png" alt="RMRC" />
+        <img src="./assets/PartnerImages/iitguwahati-CFETscmB.png" alt="IIT" />
+        <img src="./assets/PartnerImages/jio-IwmycTSP.png" alt="Jio" />
+      </div>
+    </div>
+    <a href="#" class="btn-purple">LEARN MORE ABOUT PARTNERS</a>
+  </section>
+
+  <!-- Startups Onboarded Section -->
+  <section class="logo-section startups">
+    <h2>STARTUPS ONBOARDED</h2>
+    <p>Where vision meets innovation</p>
+    <div class="startups-display-outer">
+      <div class="marquee-container reverse">
+        <div class="marquee-content">
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture1-CnZitwGM.png" alt="Plantery" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture2-Da7PfdAM.png" alt="driEV" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture3-CM2603tC.png" alt="Eminent" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture4-6zIjylLZ.png" alt="Photo" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture5-Be9iqzBd.png" alt="Solar" />
+          </div>
+          <!-- Duplicate set for loop -->
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture6-B7vMOLkM.png" alt="Plantery" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture7-CGa24AsB.png" alt="driEV" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture8-J8cKndRq.png" alt="Eminent" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture9-So3Wtcmg.png" alt="Plantery" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture10-DzKvKmrh.png" alt="driEV" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture11-BdloT9py.png" alt="URBAN HYPAEA" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture13-DG6NACa_.png" alt="Plantery" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture14-BtBtTOwZ.png" alt="driEV" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture15-DjzObtpp.png" alt="Eminent" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture16-CddkGksu.png" alt="Plantery" />
+          </div>
+          <div class="startup-logo-card">
+            <img src="./assets/startupimages/Picture17-lHbSNtko.png" alt="driEV" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn-purple">LEARN MORE ABOUT STARTUPS</a>
+  </section>
+
+  <!-- Saga (Carousel) -->
+  <section class="saga-section">
+    <div class="saga-container">
+      <div class="saga-text">
+        <h1>Saga</h1>
+        <div class="saga-item">
+          <h3>Collaborative Ecosystem</h3>
+          <p>
+            We facilitate direct connections between mentors, industry
+            leaders, and partners with startups, creating a vibrant support
+            network that nurtures growth and collaboration.
+          </p>
+        </div>
+        <div class="saga-item">
+          <h3>Expertise</h3>
+          <p>
+            Our partnerships with renowned research institutions and
+            innovation hubs enable us to access a broad spectrum of knowledge
+            and technical expertise.
+          </p>
+        </div>
+        <div class="saga-item">
+          <h3>Innovation</h3>
+          <p>
+            We foster a culture of ongoing experimentation and adaptability,
+            encouraging new ideas and solutions to meet the ever-changing
+            challenges.
+          </p>
+        </div>
+        <div class="saga-item">
+          <h3>Mentorship</h3>
+          <p>
+            We provide comprehensive mentorship programs that address various
+            aspects of startup development, including business strategy and
+            market entry.
+          </p>
+        </div>
+      </div>
+      <div class="saga-slider-container">
+        <div class="saga-slides" id="sagaSlides">
+          <img src="./assets/Saga/img1.jpg" class="active" alt="Saga 1" />
+          <img src="./assets/Saga/img2.jpg" alt="Saga 2" />
+          <img src="./assets/Saga/img3.jpg" alt="Saga 3" />
+          <img src="./assets/Saga/img4.png" alt="Saga 4" />
+          <img src="./assets/Saga/img5.jpg" alt="Saga 5" />
+          <img src="./assets/Saga/img6.jpg" alt="Saga 6" />
+          <img src="./assets/Saga/img7.jpg" alt="Saga 7" />
+          <img src="./assets/Saga/img8.jpg" alt="Saga 8" />
+        </div>
+
+        <div class="slider-nav">
+          <button onclick="changeSaga(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button onclick="changeSaga(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Innovation Stats (Nation Building) -->
+  <section class="innovation-section">
+    <h1>Innovation for Nation Building</h1>
+    <div class="stats-container">
+      <div class="stat-card">
+        <i class="fas fa-users"></i>
+        <h2 class="counter" data-target="18">0</h2>
+        <p>NUMBER OF STARTUPS</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h2 class="counter" data-target="23">0</h2>
+        <p>NUMBER OF MENTORS</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-calendar-alt"></i>
+        <h2 class="counter" data-target="15">0</h2>
+        <p>NUMBER OF EVENTS</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-tools"></i>
+        <h2 class="counter" data-target="5">0</h2>
+        <p>NUMBER OF WORKSHOPS</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expert Reviews Section -->
+  <section class="expert-reviews-section">
+    <h1>Expert Reviews</h1>
+
+    <div class="expert-slider-outer">
+      <div id="expertCard" class="expert-card">
+        <!-- LEFT PROFILE -->
+        <div class="expert-profile-side">
+          <div class="img-wrap">
+            <img src="./assets/expert-review/bksahu-BnY5GmXA.jpg" id="expertPic" alt="Expert" />
+          </div>
+
+          <h3 id="expertName">Dr. Bijay Kumar Sahu</h3>
+          <p class="designation">HEAD-NRDC OUTREACH OFFICE</p>
+          <p class="org" id="expertOrg">Govt of India</p>
+
+          <div class="expert-profile-btns">
+            <!-- VIDEO BUTTON -->
+            <a href="#" class="expert-btn expert-video-btn" data-video="https://www.youtube.com/embed/VIDEO_ID">
+              <i class="fas fa-play"></i> Video
+            </a>
+
+            <!-- LINKEDIN BUTTON -->
+            <a href="https://linkedin.com" target="_blank" class="expert-btn">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="expert-content-side">
+          <span class="quote-mark">"</span>
+          <p class="expert-testimonial" id="expertQuote">
+            Connecting research lab technology to practical use, uniting
+            stakeholders to foster entrepreneurship, innovation for societal
+            benefits, aligns with India's vision and values.
+          </p>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="expert-nav-controls">
+        <button class="nav-circle" onclick="changeExpert(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="nav-dots" id="expertDots"></div>
+
+        <button class="nav-circle" onclick="changeExpert(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Slider (Infinite) -->
+  <section class="testimonials-section">
+    <h1>Testimonials</h1>
+    <div class="testi-container">
+      <div class="testi-wrapper">
+        <div class="testi-track" id="testiTrack">
+          <!-- Cards 1-9 -->
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/Driev-1PWIyMXq.jpg" alt="AP" />
+            </div>
+            <p class="testi-quote">
+              "driEV is a clean mobility startup revolutionizing urban
+              commuting with eco-friendly e-bike sharing solutions. With a
+              fleet of over 1,100 vehicles, the company has established itself
+              as a pioneer in sustainable urban commute. Lets driEV operates
+              13 community stations across Bhubaneswar and is expanding into
+              Bengaluru, offering affordable and convenient mobility solutions
+              tailored for urban."
+            </p>
+            <h4 class="testi-name">Mr. Ankur Patel</h4>
+            <span class="testi-title">Founder, LETS DRIEV</span>
+          </div>
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/asima-BJXWNaaJ.jpg" alt="AP" />
+            </div>
+            <p class="testi-quote">
+              "PhotoSpIMeDx, a MedTech startup, bridges India's diagnostic gap
+              with accessible and affordable solutions. We specialize in early
+              cancer detection using advanced optical techniques, creating
+              portable and rapid tools to make quality healthcare a universal
+              right and empower healthcare providers with real-time assessment
+              capabilities."
+            </p>
+            <h4 class="testi-name">Dr. Asima Pradhan</h4>
+            <span class="testi-title">Founder, PHOTOSPIMEDX</span>
+          </div>
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/hydro-C-B52VSJ.jpeg" alt="AM" />
+            </div>
+            <p class="testi-quote">
+              "At Hydro Valley, we believe that what you consume should
+              nourish not just the body, but the soul. Pure, fresh, and
+              sustainable—goodness delivered from Farm to Fork."
+            </p>
+            <h4 class="testi-name">Mr. Ashish Mohanty</h4>
+            <span class="testi-title">Founder & Chief Farmer , HYDROVELLEY PVT LTD</span>
+          </div>
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/spkmak-BcWyiGD_.jpg" alt="AM" />
+            </div>
+            <p class="testi-quote">
+              ""SPK MAK offers end-to-end product solutions through two
+              models: Engineering Services and Original Design Manufacturing
+              (ODM). The company provides everything from design and AI
+              integration to in-house development of products that global
+              clients can market under their own brand, effectively bridging
+              the gap from concept to market." "
+            </p>
+            <h4 class="testi-name">Mr. Dhrutidhara Behera</h4>
+            <span class="testi-title">Founder & Director, SPK-MAK TECHNOLOGIES</span>
+          </div>
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/Abhishek-C6VvNhVo.jpeg" alt="AM" />
+            </div>
+            <p class="testi-quote">
+              "As a proud student of the Agriculture College at SOA
+              University, we designed an innovative plant-based energy storage
+              device aimed at promoting sustainable energy solutions. This
+              startup got mentorship and technological support provided by AIC
+              SOA University, where I gained invaluable exposure to
+              cutting-edge technology, industry connections, and real-world
+              expertise."
+            </p>
+            <h4 class="testi-name">Mr. Abhishek Mohapatra</h4>
+            <span class="testi-title">Founder & CEO, PLANTERY</span>
+          </div>
+          <div class="testi-card">
+            <div class="testi-img">
+              <img src="./assets/TESTIMONIALS/Arjyesh-DPFvxSwi.jpeg" alt="AM" />
+            </div>
+            <p class="testi-quote">
+              "At EVspeer, we are building a revolutionary on-demand EV
+              charging platform that connects drivers in need with nearby EV
+              users, charging stations, or our mobile chargers. By leveraging
+              V2V technology and a community-driven approach, we ensure EV
+              charging is seamless, accessible, and reliable wherever you
+              are."
+            </p>
+            <h4 class="testi-name">Mr. Ashish Mohanty</h4>
+            <span class="testi-title">Founder & CEO , VSPEER PVT LTD</span>
+          </div>
+          <!-- Add more cards as needed -->
+        </div>
+      </div>
+      <div class="testi-nav">
+        <button class="testi-arrow" onclick="moveTesti(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="testi-arrow" onclick="moveTesti(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Footer -->
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar,
+          Odisha. The university is committed to academic excellence, research innovation and holistic development
+          across multiple professional disciplines.
+        </p>
+        <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University,
+          supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing
+          mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful
+          enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
+        </p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section links">
+        <h2 class="footer-heading">Quick Links</h2>
+        <div class="heading-underline"></div>
+        <div class="links-grid">
+          <ul>
+            <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
+            <li><a href="./About us-section/team.html">Team</a></li>
+            <li><a href="./About us-section/board_members.html">Board Members</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
+            <li><a href="http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
+            <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
+            <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
+            <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
+            <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-section contact">
+        <h2 class="footer-heading">Contact Info</h2>
+        <div class="heading-underline"></div>
+        <div class="contact-item">
+          <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
+          751030, Odisha, India
+        </div>
+        <div class="contact-item">
+          <strong>Email:</strong>
+          <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
+        </div>
+        <div class="contact-item">
+          <strong>Phone:</strong>
+          <a href="tel:+919437035905">+91-9437035905</a>,
+          <a href="tel:+9193384625239">+919338462523</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- test push-->
+  <!-- Expert Video Modal -->
+  <div class="expert-video-modal" id="expertVideoModal">
+    <div class="expert-video-overlay"></div>
+
+    <div class="expert-video-box">
+      <button class="expert-video-close">&times;</button>
+      <div class="expert-video-wrapper">
+        <iframe id="expertVideoFrame" src="" title="Expert Review Video" frameborder="0"
+          allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  <!-- Expert Video Modal JS -->
+
+  <!-- Main JS for carousels, counters, etc. -->
+  <script src="./aic.js"></script>
 </body>
+
 </html>

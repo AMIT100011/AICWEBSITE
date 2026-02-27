@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIC-SOA | Image Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board Members | AIC-SOA Foundation</title>
     <!-- Shared styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/aic.css">
     <!-- Page specific styles -->
-    <link rel="stylesheet" href="gallery.css">
-    <!-- New Alert Bar Styles -->
+    <link rel="stylesheet" href="./board_members.css">
+    <!-- Alert Bar Styles -->
     <style>
         .alert-row {
             display: flex;
@@ -57,16 +57,12 @@
             font-size: 14px;
             cursor: pointer;
             opacity: 0;
-            transform: translateX(20px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.2s ease;
             white-space: nowrap;
-            pointer-events: none;
         }
 
         .alert-msg.active {
             opacity: 1;
-            transform: translateX(0);
-            pointer-events: auto;
         }
 
         .alert-controls {
@@ -176,6 +172,37 @@
             height: auto;
             display: block;
         }
+
+        /* Hero for Board Members */
+        .board-hero {
+            height: 350px;
+            background: linear-gradient(rgba(20, 40, 80, 0.8), rgba(20, 40, 80, 0.8)), url("../herovideo.mp4");
+            /* Fallback or static part of video */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .board-hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .board-hero h1 span {
+            color: #f5b335;
+        }
+
+        .board-hero p {
+            max-width: 800px;
+            font-size: 18px;
+            color: #cbd5e1;
+        }
     </style>
 </head>
 
@@ -193,11 +220,11 @@
                 <div class="nav-item">
                     <a href="#" class="nav-link">About Us</a>
                     <div class="dropdown-menu">
-                        <a href="../About us-section/founders_desk.html">Founder's Desk</a>
-                        <a href="../About us-section/about uss/reach.html">About</a>
-                        <a href="../About us-section/board_members.html">Board Members</a>
+                        <a href="./founders_desk.html">Founder's Desk</a>
+                        <a href="./about uss/reach.html">About</a>
+                        <a href="./board_members.html">Board Members</a>
                         <a href="../About us-section/team.html">Team</a>
-                        <a href="../About us-section/our_focus.html">Our Focus</a>
+                        <a href="./our_focus.html">Our Focus</a>
                         <a href="../Pages/Infrastructure.html">Infrastructure</a>
                     </div>
                 </div>
@@ -275,176 +302,107 @@
             <div class="alert-popup-body"><img src="" alt="Announcement" /></div>
         </div>
     </div>
-    <script>
-        (function () {
-            const messages = document.querySelectorAll('.alert-msg');
-            const container = document.getElementById('alert-msg-container');
-            const prevBtn = document.getElementById('alertPrevBtn');
-            const nextBtn = document.getElementById('alertNextBtn');
-            const popupModal = document.querySelector('.alert-popup-modal');
-            const popupOverlay = document.querySelector('.alert-popup-overlay');
-            const popupTitle = document.querySelector('.alert-popup-title');
-            const popupImage = document.querySelector('.alert-popup-body img');
-            const popupCloseBtn = document.querySelector('.alert-popup-close');
-            if (!messages.length) return;
-            let currentIdx = 0, autoSlide, isTransitioning = false;
-            function transitionTo(newIdx) {
-                if (isTransitioning || newIdx === currentIdx) return;
-                isTransitioning = true;
-                messages[currentIdx].classList.remove('active');
-                messages[newIdx].classList.add('active'); currentIdx = newIdx;
-                setTimeout(() => { isTransitioning = false; }, 400);
-            }
-            function showNext() { transitionTo((currentIdx + 1) % messages.length); }
-            function showPrev() { transitionTo((currentIdx - 1 + messages.length) % messages.length); }
-            function startTimer() { autoSlide = setInterval(showNext, 5000); }
-            function resetTimer() { clearInterval(autoSlide); startTimer(); }
-            messages.forEach((msg, i) => { if (i === 0) msg.classList.add('active'); else msg.classList.remove('active'); });
-            startTimer();
-            if (nextBtn) nextBtn.addEventListener('click', () => { showNext(); resetTimer(); });
-            if (prevBtn) prevBtn.addEventListener('click', () => { showPrev(); resetTimer(); });
-            if (container) { container.addEventListener('mouseenter', () => clearInterval(autoSlide)); container.addEventListener('mouseleave', startTimer); }
-            function openPopup(src, title) { if (!src) return; popupImage.src = src; popupTitle.textContent = title || 'Announcement'; popupModal.classList.add('active'); clearInterval(autoSlide); }
-            function closePopup() { popupModal.classList.remove('active'); startTimer(); }
-            messages.forEach(msg => { msg.addEventListener('click', (e) => { e.preventDefault(); openPopup(msg.dataset.popup, msg.dataset.title); }); });
-            if (popupCloseBtn) popupCloseBtn.addEventListener('click', closePopup);
-            if (popupOverlay) popupOverlay.addEventListener('click', closePopup);
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && popupModal.classList.contains('active')) closePopup(); });
-            const alertRow = document.querySelector('.alert-row');
-            window.addEventListener('scroll', () => { if (window.scrollY > 50) { alertRow.classList.add('hidden'); } else { alertRow.classList.remove('hidden'); } }, { passive: true });
-        })();
-    </script>
 
-    <section class="gallery-wrapper">
-        <h1 class="gallery-title">Image <span>Gallery</span></h1>
-
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="AICSOA_files/image1-Da98kxNC.jpg" alt="Event 1">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Director General of Meteorology, IMD visit to AIC-SOA</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image2-DrzfEHYN.jpg" alt="Event 2">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>International Conclave on Climate Change 2025</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image3-CmxEDmK2.jpg" alt="Event 3">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Interaction with Startup Founders by Dr. Anand Deshpande</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image4-VwKTL-zt.jpg" alt="Event 4">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Ideathon 2023 - Innovative Solutions Showcase</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image5-CReo1blo.jpg" alt="Event 5">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>India Mobile Congress 2025 - Tech Exhibition</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image6-yDUJWJ9X.jpg" alt="Event 6">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Innovation & Entrepreneurship Workshop</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image4-VwKTL-zt.jpg" alt="Event 7">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>MSME Policy Discussion with Government Officials</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image8-rZlx2o6r.jpg" alt="Event 8">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Annual Startup Pitch Competition</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image9-BKUBZ6nL.jpg" alt="Event 9">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Women Empowerment in Technology Seminar</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image10-DuTrH5lC.jpg" alt="Event 10">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>AIC-SOA Foundation Day Celebrations</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image11-9xUerDBx.jpg" alt="Event 11">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Global Warming & Sustainability Summit</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image12-CtEXsGdg.jpg" alt="Event 12">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Tech-Arena Business Development Session</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image13-BilnF-sM.jpg" alt="Event 13">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Incubation Program Orientation 2026</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image14-8Zsyyelk.jpg" alt="Event 14">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Deep-Tech Startup Mentorship Program</p>
-                </div>
-            </div>
-
-            <div class="gallery-card">
-                <img src="AICSOA_files/image15-IUxfo5ZK.jpg" alt="Event 15">
-                <div class="hover-overlay"><span>CLICK TO ENLARGE</span></div>
-                <div class="caption-bar">
-                    <p>Final Project Presentation - B.Tech CSE Batch</p>
-                </div>
-            </div>
-        </div>
+    <section class="board-hero">
+        <h1>Board <span>Members</span></h1>
+        <p>Guiding AIC-SOA Foundation towards excellence through strategic vision and leadership.</p>
     </section>
 
-    <div id="gallery-lightbox" class="lightbox">
-        <span class="close-btn">&times;</span>
-        <img id="lightbox-img" src="" alt="Full View">
-    </div>
+    <section class="board-section">
+        <div class="board-grid">
+            <!-- Member 1 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Prof.(Dr.) Pradipta Kumar Nanda</h3>
+                <div class="position">DIRECTOR, AIC-SOA FOUNDATION, BHUBANESWAR</div>
+                <p></p>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Prof.(Dr.) Manas Kumar Mallick</h3>
+                <div class="position">DIRECTOR, AIC-SOA FOUNDATION, BHUBANESWAR</div>
+                <p></p>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Dr. Sanghamitra Pati</h3>
+                <div class="position">Director, ICMR, Chandrasekharpur, Bhubaneswar</div>
+                <p></p>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Dr. Mrutyunjay Mohapatra</h3>
+                <div class="position">Director General of Meteorology,Govt. of India,New Delhi</div>
+                <p></p>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Dr. Bijay Kumar Sahu</h3>
+                <div class="position">Senior Regional Manager,Head Outreach Office,National Reasearch development
+                    Corporation ,Govt. Of India</div>
+                <p>
+                </p>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Prof.(Dr.) Bijaya Ketan Panigrahi</h3>
+                <div class="position">Professor Department of Electrical and Electronics Engineering,Centre for
+                    automotive Research and Tribology,IIT Delhi</div>
+                <p></p>
+            </div>
+            <!-- Member 7 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Mr. Sambit Tripathy</h3>
+                <div class="position">Chairman-cum-Managing Director,Livelihood Alternatives</div>
+                <p></p>
+            </div>
+            <!-- Member 8 -->
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Dr. Renu Sharma</h3>
+                <div class="position">Professor,SOADU</div>
+                <p>.</p>
+            </div>
+            <!-- Member 9
+            <div class="board-card">
+                <div class="image-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Name of Member</h3>
+                <div class="position">Technical Lead</div>
+                <p></p>
+            </div> -->
+        </div>
+
+    </section>
+
     <!-- Main Footer -->
     <footer class="main-footer">
         <div class="footer-container">
@@ -453,17 +411,21 @@
                 <div class="heading-underline"></div>
                 <p class="footer-description">
                     Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in
-                    Bhubaneswar, Odisha. The university is committed to academic excellence, research innovation and
-                    holistic development across multiple professional disciplines.
+                    Bhubaneswar,
+                    Odisha. The university is committed to academic excellence, research innovation and holistic
+                    development
+                    across multiple professional disciplines.
                 </p>
                 <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
                 <div class="heading-underline"></div>
                 <p class="footer-description">
                     AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be
-                    University, supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating
-                    startups, providing mentorship, infrastructure,industry connections,and training to transform ideas
-                    into scalable ,impactful enterprises for students ,researchers ,and early stage founders acrsoss
-                    diverse sectors.
+                    University,
+                    supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups,
+                    providing
+                    mentorship, infrastructure,industry connections,and training to transform ideas into scalable
+                    ,impactful
+                    enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
                 </p>
                 <div class="social-icons">
                     <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
@@ -481,7 +443,7 @@
                     <ul>
                         <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
                         <li><a href="../About us-section/team.html">Team</a></li>
-                        <li><a href="../About us-section/board_members.html">Board Members</a></li>
+                        <li><a href="#">Board Members</a></li>
                         <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
                         <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
                         <li><a href="http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
@@ -517,8 +479,24 @@
         </div>
     </footer>
 
-    <script src="gallery.js"></script>
     <script src="../aic.js"></script>
+    <script>
+        // Alert Bar Logic
+        (function () {
+            const messages = document.querySelectorAll('.alert-msg');
+            const container = document.getElementById('alert-msg-container');
+            const prevBtn = document.getElementById('alertPrevBtn');
+            const nextBtn = document.getElementById('alertNextBtn');
+            if (!messages.length) return;
+            let currentIdx = 0;
+            function showMsg(idx) {
+                messages.forEach((m, i) => m.classList.toggle('active', i === idx));
+            }
+            nextBtn.addEventListener('click', () => { currentIdx = (currentIdx + 1) % messages.length; showMsg(currentIdx); });
+            prevBtn.addEventListener('click', () => { currentIdx = (currentIdx - 1 + messages.length) % messages.length; showMsg(currentIdx); });
+            setInterval(() => { currentIdx = (currentIdx + 1) % messages.length; showMsg(currentIdx); }, 5000);
+        })();
+    </script>
 </body>
 
 </html>

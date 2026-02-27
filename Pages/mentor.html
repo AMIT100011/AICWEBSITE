@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,29 +12,169 @@
   <link rel="stylesheet" href="../styles/mentor.css">
   <!-- Alert Bar Styles -->
   <style>
-    .alert-row { display: flex; align-items: center; background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%); color: white; height: 45px; font-family: sans-serif; width: 100%; transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease; overflow: hidden; }
-    .alert-row.hidden { height: 0; opacity: 0; padding: 0; }
-    .alert-row .alert-label { background-color: #ff0000; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: bold; }
-    .alert-content-area { flex-grow: 1; padding-left: 20px; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center; }
-    .alert-msg { position: absolute; left: 0; color: white; text-decoration: none; font-size: 14px; cursor: pointer; opacity: 0; transition: opacity 0.2s ease; white-space: nowrap; }
-    .alert-msg.active { opacity: 1; }
-    .alert-controls { margin-left: auto; display: flex; height: 100%; border-left: 1px solid rgba(255,255,255,0.2); }
-    .alert-controls button { background: transparent; border: none; color: white; padding: 0 15px; cursor: pointer; font-size: 18px; transition: background 0.3s; }
-    .alert-controls button:hover { background: rgba(255,255,255,0.1); }
-    .alert-badge { font-size: 10px; padding: 2px 8px; border-radius: 3px; margin-left: 10px; font-weight: bold; display: inline-block; }
-    .alert-badge.update { background-color: #4caf50; }
-    .alert-badge.new { background-color: #ff9800; }
-    .alert-popup-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: none; }
-    .alert-popup-modal.active { display: block; }
-    .alert-popup-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-    .alert-popup-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; max-width: 450px; width: 85%; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,0.4); }
-    .alert-popup-header { background: #3f51b5; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-    .alert-popup-title { margin: 0; font-size: 18px; font-weight: 600; }
-    .alert-popup-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; line-height: 1; }
-    .alert-popup-body { padding: 0; }
-    .alert-popup-body img { width: 100%; height: auto; display: block; }
+    .alert-row {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(to top, #1a1a5e 0%, #2e3192 60%, #3d5a99 100%);
+      color: white;
+      height: 45px;
+      font-family: sans-serif;
+      width: 100%;
+      transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+
+    .alert-row.hidden {
+      height: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+    .alert-row .alert-label {
+      background-color: #ff0000;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .alert-content-area {
+      flex-grow: 1;
+      padding-left: 20px;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-msg {
+      position: absolute;
+      left: 0;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .alert-msg.active {
+      opacity: 1;
+    }
+
+    .alert-controls {
+      margin-left: auto;
+      display: flex;
+      height: 100%;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .alert-controls button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 0 15px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    .alert-controls button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .alert-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 10px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .alert-badge.update {
+      background-color: #4caf50;
+    }
+
+    .alert-badge.new {
+      background-color: #ff9800;
+    }
+
+    .alert-popup-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
+      display: none;
+    }
+
+    .alert-popup-modal.active {
+      display: block;
+    }
+
+    .alert-popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .alert-popup-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 85%;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .alert-popup-header {
+      background: #3f51b5;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .alert-popup-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .alert-popup-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .alert-popup-body {
+      padding: 0;
+    }
+
+    .alert-popup-body img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Top Header & Navigation -->
@@ -50,8 +191,8 @@
           <div class="dropdown-menu">
             <a href="../About us-section/founders_desk.html">Founder's Desk</a>
             <a href="../About us-section/about uss/reach.html">About</a>
-            <a href="#">Board Members</a>
-            <a href="#">Team</a>
+            <a href="../About us-section/board_members.html">Board Members</a>
+            <a href="../About us-section/team.html">Team</a>
             <a href="../About us-section/our_focus.html">Our Focus</a>
             <a href="../Pages/Infrastructure.html">Infrastructure</a>
           </div>
@@ -67,11 +208,14 @@
         <div class="nav-item">
           <a href="#" class="nav-link">Startup Hubs</a>
           <div class="dropdown-menu">
-            <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer">Startup India Website</a>
+            <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer">Startup India
+              Website</a>
             <a href="https://startupodisha.gov.in/" target="_blank" rel="noopener noreferrer">Startup Odisha Website</a>
             <a href="https://aim.gov.in/" target="_blank" rel="noopener noreferrer">Atal Innovation Mission</a>
-            <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer">Women Empowerment Funds</a>
-            <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer">Women MSME Policy</a>
+            <a href="https://missionshakti.odisha.gov.in/" target="_blank" rel="noopener noreferrer">Women Empowerment
+              Funds</a>
+            <a href="https://msme.gov.in/women-entrepreneurs" target="_blank" rel="noopener noreferrer">Women MSME
+              Policy</a>
           </div>
         </div>
         <div class="nav-item">
@@ -87,12 +231,14 @@
           <a href="#" class="nav-link">Resources</a>
           <div class="dropdown-menu">
             <a href="../GAllery/gallery.html">Our Gallery</a>
+            <a href="../event_page/events.html">Events</a>
           </div>
         </div>
         <div class="nav-item">
           <a href="#" class="nav-link">Connect</a>
           <div class="dropdown-menu">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform" target="_blank" rel="noopener noreferrer">Register</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmgquL03Iq2nb3KUx2ElLiouEV60ju7Vc2wbz2eHJV_jb9lA/viewform"
+              target="_blank" rel="noopener noreferrer">Register</a>
           </div>
         </div>
       </nav>
@@ -103,9 +249,12 @@
     <div class="alert-row">
       <div class="alert-label">Alert</div>
       <div class="alert-content-area" id="alert-msg-container">
-        <a href="#" class="alert-msg active" data-popup="../popup.jpeg" data-title="Women in STEM Initiative">NextGen Women in STEM - Taking Action, Creating Change.<span class="alert-badge update">UPDATE</span></a>
-        <a href="#" class="alert-msg" data-popup="../popup.jpeg" data-title="AI in Education">AI in Education: Revolutionizing Learning Experience.<span class="alert-badge new">NEW</span></a>
-        <a href="#" class="alert-msg" data-popup="../popup2.jpeg" data-title="Speaker Announcement">Our Eminent Speakers for AI in Education.<span class="alert-badge new">NEW</span></a>
+        <a href="#" class="alert-msg active" data-popup="../popup.jpeg" data-title="Women in STEM Initiative">NextGen
+          Women in STEM - Taking Action, Creating Change.<span class="alert-badge update">UPDATE</span></a>
+        <a href="#" class="alert-msg" data-popup="../popup.jpeg" data-title="AI in Education">AI in Education:
+          Revolutionizing Learning Experience.<span class="alert-badge new">NEW</span></a>
+        <a href="#" class="alert-msg" data-popup="../popup2.jpeg" data-title="Speaker Announcement">Our Eminent Speakers
+          for AI in Education.<span class="alert-badge new">NEW</span></a>
       </div>
       <div class="alert-controls">
         <button id="alertPrevBtn" title="Previous">&#10094;</button>
@@ -113,289 +262,313 @@
       </div>
     </div>
   </div>
-  <div class="alert-popup-modal"><div class="alert-popup-overlay"></div><div class="alert-popup-container"><div class="alert-popup-header"><h3 class="alert-popup-title">Announcement</h3><button class="alert-popup-close">&times;</button></div><div class="alert-popup-body"><img src="" alt="Announcement" /></div></div></div>
+  <div class="alert-popup-modal">
+    <div class="alert-popup-overlay"></div>
+    <div class="alert-popup-container">
+      <div class="alert-popup-header">
+        <h3 class="alert-popup-title">Announcement</h3><button class="alert-popup-close">&times;</button>
+      </div>
+      <div class="alert-popup-body"><img src="" alt="Announcement" /></div>
+    </div>
+  </div>
   <script>
-  (function() {
-    const messages = document.querySelectorAll('.alert-msg');
-    const container = document.getElementById('alert-msg-container');
-    const prevBtn = document.getElementById('alertPrevBtn');
-    const nextBtn = document.getElementById('alertNextBtn');
-    const popupModal = document.querySelector('.alert-popup-modal');
-    const popupOverlay = document.querySelector('.alert-popup-overlay');
-    const popupTitle = document.querySelector('.alert-popup-title');
-    const popupImage = document.querySelector('.alert-popup-body img');
-    const popupCloseBtn = document.querySelector('.alert-popup-close');
-    if (!messages.length) return;
-    let currentIdx = 0, autoSlide, isTransitioning = false;
-    function transitionTo(newIdx) {
-      if (isTransitioning || newIdx === currentIdx) return;
-      isTransitioning = true;
-      messages[currentIdx].classList.remove('active');
-      messages[newIdx].classList.add('active'); currentIdx = newIdx;
-      setTimeout(() => { isTransitioning = false; }, 150);
-    }
-    function showNext() { transitionTo((currentIdx + 1) % messages.length); }
-    function showPrev() { transitionTo((currentIdx - 1 + messages.length) % messages.length); }
-    function startTimer() { autoSlide = setInterval(showNext, 5000); }
-    function resetTimer() { clearInterval(autoSlide); startTimer(); }
-    messages.forEach((msg, i) => { if (i === 0) msg.classList.add('active'); else msg.classList.remove('active'); });
-    startTimer();
-    if (nextBtn) nextBtn.addEventListener('click', () => { showNext(); resetTimer(); });
-    if (prevBtn) prevBtn.addEventListener('click', () => { showPrev(); resetTimer(); });
-    if (container) { container.addEventListener('mouseenter', () => clearInterval(autoSlide)); container.addEventListener('mouseleave', startTimer); }
-    function openPopup(src, title) { if (!src) return; popupImage.src = src; popupTitle.textContent = title || 'Announcement'; popupModal.classList.add('active'); clearInterval(autoSlide); }
-    function closePopup() { popupModal.classList.remove('active'); startTimer(); }
-    messages.forEach(msg => { msg.addEventListener('click', (e) => { e.preventDefault(); openPopup(msg.dataset.popup, msg.dataset.title); }); });
-    if (popupCloseBtn) popupCloseBtn.addEventListener('click', closePopup);
-    if (popupOverlay) popupOverlay.addEventListener('click', closePopup);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && popupModal.classList.contains('active')) closePopup(); });
-    const alertRow = document.querySelector('.alert-row');
-    window.addEventListener('scroll', () => { if (window.scrollY > 50) { alertRow.classList.add('hidden'); } else { alertRow.classList.remove('hidden'); } }, { passive: true });
-  })();
+    (function () {
+      const messages = document.querySelectorAll('.alert-msg');
+      const container = document.getElementById('alert-msg-container');
+      const prevBtn = document.getElementById('alertPrevBtn');
+      const nextBtn = document.getElementById('alertNextBtn');
+      const popupModal = document.querySelector('.alert-popup-modal');
+      const popupOverlay = document.querySelector('.alert-popup-overlay');
+      const popupTitle = document.querySelector('.alert-popup-title');
+      const popupImage = document.querySelector('.alert-popup-body img');
+      const popupCloseBtn = document.querySelector('.alert-popup-close');
+      if (!messages.length) return;
+      let currentIdx = 0, autoSlide, isTransitioning = false;
+      function transitionTo(newIdx) {
+        if (isTransitioning || newIdx === currentIdx) return;
+        isTransitioning = true;
+        messages[currentIdx].classList.remove('active');
+        messages[newIdx].classList.add('active'); currentIdx = newIdx;
+        setTimeout(() => { isTransitioning = false; }, 150);
+      }
+      function showNext() { transitionTo((currentIdx + 1) % messages.length); }
+      function showPrev() { transitionTo((currentIdx - 1 + messages.length) % messages.length); }
+      function startTimer() { autoSlide = setInterval(showNext, 5000); }
+      function resetTimer() { clearInterval(autoSlide); startTimer(); }
+      messages.forEach((msg, i) => { if (i === 0) msg.classList.add('active'); else msg.classList.remove('active'); });
+      startTimer();
+      if (nextBtn) nextBtn.addEventListener('click', () => { showNext(); resetTimer(); });
+      if (prevBtn) prevBtn.addEventListener('click', () => { showPrev(); resetTimer(); });
+      if (container) { container.addEventListener('mouseenter', () => clearInterval(autoSlide)); container.addEventListener('mouseleave', startTimer); }
+      function openPopup(src, title) { if (!src) return; popupImage.src = src; popupTitle.textContent = title || 'Announcement'; popupModal.classList.add('active'); clearInterval(autoSlide); }
+      function closePopup() { popupModal.classList.remove('active'); startTimer(); }
+      messages.forEach(msg => { msg.addEventListener('click', (e) => { e.preventDefault(); openPopup(msg.dataset.popup, msg.dataset.title); }); });
+      if (popupCloseBtn) popupCloseBtn.addEventListener('click', closePopup);
+      if (popupOverlay) popupOverlay.addEventListener('click', closePopup);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && popupModal.classList.contains('active')) closePopup(); });
+      const alertRow = document.querySelector('.alert-row');
+      window.addEventListener('scroll', () => { if (window.scrollY > 50) { alertRow.classList.add('hidden'); } else { alertRow.classList.remove('hidden'); } }, { passive: true });
+    })();
   </script>
 
-<section class="hero">
-  <div class="hero-overlay">
-    <h1>Meet Our <span>Mentors</span></h1>
-    <p>Industry leaders and academic experts providing guidance and wisdom to shape the future</p>
-  </div>
-</section>
-
-<section class="mentor-section">
-  <div class="mentor-grid">
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/gkpatra-C_5gTJkG.png">
-      <h3>Dr. Gopal Krishna Patra</h3>
-      <h4>Director, CSIR 4th Paradigm Institute</h4>
-      <p>Dr. Patra brings extensive experience in scientific research, institutional leadership, and innovation-driven ecosystems. He actively mentors startups and research teams in advanced technologies.</p>
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>Meet Our <span>Mentors</span></h1>
+      <p>Industry leaders and academic experts providing guidance and wisdom to shape the future</p>
     </div>
+  </section>
 
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/raghu-BIkqCndS.png">
-      <h3>Mr. Raghu Panicker</h3>
-      <h4>CEO, Kaynes Semicon</h4>
-      <p>Mr. Panicker is a seasoned industry leader with expertise in semiconductor manufacturing, business strategy, and scaling technology-driven enterprises.</p>
+  <section class="mentor-section">
+    <div class="mentor-grid">
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/gkpatra-C_5gTJkG.png">
+        <h3>Dr. Gopal Krishna Patra</h3>
+        <h4>Director, CSIR 4th Paradigm Institute</h4>
+        <p>Dr. Patra brings extensive experience in scientific research, institutional leadership, and innovation-driven
+          ecosystems. He actively mentors startups and research teams in advanced technologies.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/raghu-BIkqCndS.png">
+        <h3>Mr. Raghu Panicker</h3>
+        <h4>CEO, Kaynes Semicon</h4>
+        <p>Mr. Panicker is a seasoned industry leader with expertise in semiconductor manufacturing, business strategy,
+          and scaling technology-driven enterprises.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/kcgouda-DYVANAKn.png">
+        <h3>Mr. Krushna Chandra Gouda</h3>
+        <h4>Senior Principal Scientist, CSIR</h4>
+        <p>With decades of experience in applied research and technology commercialization, Mr. Gouda supports startups
+          through scientific mentoring and innovation guidance.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/prasant-Byzz_tdl.png">
+        <h3>Prof. Prasanta Panigrahi</h3>
+        <h4>Director, CQST SOADU</h4>
+        <p>Prof. Panigrahi specializes in research leadership and innovation management, enabling academic excellence
+          and industry collaboration.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/uma-WyRQZr2D.jpg">
+        <h3>Prof. Uma Ch. Mohanty</h3>
+        <h4>Professor, SOADU</h4>
+        <p>Prof. Mohanty contributes deep academic insight and mentoring expertise in science and engineering
+          disciplines.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/kksardar-BguYIroH.png">
+        <h3>Prof. K. K. Sardar</h3>
+        <h4>College of Veterinary Science, OUAT</h4>
+        <p>Prof. Sardar provides mentorship in agricultural innovation, veterinary sciences, and applied research
+          solutions.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/gautam-D6vPbd4K.png">
+        <h3>Mr. Gautham Sivaramakrishnan</h3>
+        <h4>Lead, Blum Venture</h4>
+        <p>Mr. Sivaramakrishnan brings startup ecosystem experience in funding, growth strategy, and venture
+          development.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/sashi-CQ0ipldF.png">
+        <h3>Dr. Shashirekha Govind</h3>
+        <h4>Faculty of Dental Sciences, SOADU</h4>
+        <p>Dr. Govind mentors startups and researchers in healthcare innovation, clinical research, and medical
+          entrepreneurship.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/debahuti-DnjP73r0.png">
+        <h3>Prof. Debahuti Mishra</h3>
+        <h4>Department of CSE, SOADU</h4>
+        <p>Prof. Mishra focuses on computer science research, AI applications, and mentoring technology-based startups.
+        </p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/bibhu-ypEYxoje.png">
+        <h3>Prof. Bibhu Prasad Mohanty</h3>
+        <h4>Department of ECE, SOADU</h4>
+        <p>Prof. Mohanty supports innovation in electronics, embedded systems, and applied engineering research.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/naresh-CZOxl1Io.png">
+        <h3>Prof. Naresh Kumar Sahoo</h3>
+        <h4>Department of Chemistry, SOADU</h4>
+        <p>Prof. Sahoo mentors startups in chemical sciences, material research, and sustainable technologies.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/saroj-BYm1oSgI.png">
+        <h3>Prof. Saroj Acharya</h3>
+        <h4>Department of Mechanical Engineering, SOADU</h4>
+        <p>Prof. Acharya provides expertise in mechanical design, manufacturing innovation, and industrial mentoring.
+        </p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/sarat-VTAxh2Su.png">
+        <h3>Dr. Sarat Ch. Sahu</h3>
+        <h4>Director, Center for Environment & Climate</h4>
+        <p>Dr. Sahu mentors startups working on climate solutions, sustainability, and environmental innovation.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/grath-CQESkSO0.png">
+        <h3>Prof. Goutam Rath</h3>
+        <h4>School of Pharmaceutical Sciences, SOADU</h4>
+        <p>Prof. Rath guides startups in pharmaceutical research, drug development, and healthcare innovation.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/subudhi-0Kx2e0xa.png">
+        <h3>Prof. Enketeswara Subudhi</h3>
+        <h4>Center for Biotechnology, SOADU</h4>
+        <p>Prof. Subudhi supports biotech startups with scientific mentoring and translational research expertise.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/anurag-u3GApwvQ.png">
+        <h3>Dr. Anurag Satpathy</h3>
+        <h4>Faculty of Dental Sciences, SOADU</h4>
+        <p>Dr. Satpathy brings clinical experience and healthcare mentoring to early-stage innovators.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/lora-CBQA0QaZ.png">
+        <h3>Dr. Lora Mishra</h3>
+        <h4>Faculty of Dental Sciences, SOADU</h4>
+        <p>Dr. Mishra mentors healthcare startups focusing on dental technologies and clinical solutions.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/rajashree-D4mzsjPe.png">
+        <h3>Dr. Rajashree Panigrahi</h3>
+        <h4>Faculty of Medical Sciences, SOADU</h4>
+        <p>Dr. Panigrahi supports medical innovation, clinical research, and healthcare entrepreneurship.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/Bikas-CYyAZQJg.png">
+        <h3>Dr. Bikas Ranjan Kar</h3>
+        <h4>Faculty of Medical Sciences, SOADU</h4>
+        <p>Dr. Kar provides mentorship in medical research, diagnostics, and health technology development.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/satya-jW3FVkch.png">
+        <h3>Dr. Satya Sundar Mohapatra</h3>
+        <h4>Faculty of Medical Sciences, SOADU</h4>
+        <p>Dr. Mohapatra guides innovators in clinical research, healthcare solutions, and translational medicine.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/subhasree-D5Eoo2us.png">
+        <h3>Dr. Subhashree Ray</h3>
+        <h4>Faculty of Medical Sciences, SOADU</h4>
+        <p>Dr. Ray mentors healthcare startups with a focus on patient-centric innovation and research excellence.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/jyoti-DeJXuedm.PNG">
+        <h3>Prof. Jyoti Ranjan Das</h3>
+        <h4>Faculty of Business Administration, SOADU</h4>
+        <p>Prof. Das supports startups in business strategy, management, and entrepreneurial leadership.</p>
+      </div>
+
+      <div class="mentor-card">
+        <img src="../assets/MentorsImages/nsahoo-2m_54SKB.png">
+        <h3>Prof. Niranjana Sahoo</h3>
+        <h4>Institute of Veterinary Science, SOADU</h4>
+        <p>Prof. Sahoo provides mentorship in veterinary sciences, agri-innovation, and applied research.</p>
+      </div>
+
     </div>
+  </section>
 
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/kcgouda-DYVANAKn.png">
-      <h3>Mr. Krushna Chandra Gouda</h3>
-      <h4>Senior Principal Scientist, CSIR</h4>
-      <p>With decades of experience in applied research and technology commercialization, Mr. Gouda supports startups through scientific mentoring and innovation guidance.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/prasant-Byzz_tdl.png">
-      <h3>Prof. Prasanta Panigrahi</h3>
-      <h4>Director, CQST SOADU</h4>
-      <p>Prof. Panigrahi specializes in research leadership and innovation management, enabling academic excellence and industry collaboration.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/uma-WyRQZr2D.jpg">
-      <h3>Prof. Uma Ch. Mohanty</h3>
-      <h4>Professor, SOADU</h4>
-      <p>Prof. Mohanty contributes deep academic insight and mentoring expertise in science and engineering disciplines.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/kksardar-BguYIroH.png">
-      <h3>Prof. K. K. Sardar</h3>
-      <h4>College of Veterinary Science, OUAT</h4>
-      <p>Prof. Sardar provides mentorship in agricultural innovation, veterinary sciences, and applied research solutions.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/gautam-D6vPbd4K.png">
-      <h3>Mr. Gautham Sivaramakrishnan</h3>
-      <h4>Lead, Blum Venture</h4>
-      <p>Mr. Sivaramakrishnan brings startup ecosystem experience in funding, growth strategy, and venture development.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/sashi-CQ0ipldF.png">
-      <h3>Dr. Shashirekha Govind</h3>
-      <h4>Faculty of Dental Sciences, SOADU</h4>
-      <p>Dr. Govind mentors startups and researchers in healthcare innovation, clinical research, and medical entrepreneurship.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/debahuti-DnjP73r0.png">
-      <h3>Prof. Debahuti Mishra</h3>
-      <h4>Department of CSE, SOADU</h4>
-      <p>Prof. Mishra focuses on computer science research, AI applications, and mentoring technology-based startups.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/bibhu-ypEYxoje.png">
-      <h3>Prof. Bibhu Prasad Mohanty</h3>
-      <h4>Department of ECE, SOADU</h4>
-      <p>Prof. Mohanty supports innovation in electronics, embedded systems, and applied engineering research.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/naresh-CZOxl1Io.png">
-      <h3>Prof. Naresh Kumar Sahoo</h3>
-      <h4>Department of Chemistry, SOADU</h4>
-      <p>Prof. Sahoo mentors startups in chemical sciences, material research, and sustainable technologies.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/saroj-BYm1oSgI.png">
-      <h3>Prof. Saroj Acharya</h3>
-      <h4>Department of Mechanical Engineering, SOADU</h4>
-      <p>Prof. Acharya provides expertise in mechanical design, manufacturing innovation, and industrial mentoring.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/sarat-VTAxh2Su.png">
-      <h3>Dr. Sarat Ch. Sahu</h3>
-      <h4>Director, Center for Environment & Climate</h4>
-      <p>Dr. Sahu mentors startups working on climate solutions, sustainability, and environmental innovation.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/grath-CQESkSO0.png">
-      <h3>Prof. Goutam Rath</h3>
-      <h4>School of Pharmaceutical Sciences, SOADU</h4>
-      <p>Prof. Rath guides startups in pharmaceutical research, drug development, and healthcare innovation.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/subudhi-0Kx2e0xa.png">
-      <h3>Prof. Enketeswara Subudhi</h3>
-      <h4>Center for Biotechnology, SOADU</h4>
-      <p>Prof. Subudhi supports biotech startups with scientific mentoring and translational research expertise.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/anurag-u3GApwvQ.png">
-      <h3>Dr. Anurag Satpathy</h3>
-      <h4>Faculty of Dental Sciences, SOADU</h4>
-      <p>Dr. Satpathy brings clinical experience and healthcare mentoring to early-stage innovators.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/lora-CBQA0QaZ.png">
-      <h3>Dr. Lora Mishra</h3>
-      <h4>Faculty of Dental Sciences, SOADU</h4>
-      <p>Dr. Mishra mentors healthcare startups focusing on dental technologies and clinical solutions.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/rajashree-D4mzsjPe.png">
-      <h3>Dr. Rajashree Panigrahi</h3>
-      <h4>Faculty of Medical Sciences, SOADU</h4>
-      <p>Dr. Panigrahi supports medical innovation, clinical research, and healthcare entrepreneurship.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/Bikas-CYyAZQJg.png">
-      <h3>Dr. Bikas Ranjan Kar</h3>
-      <h4>Faculty of Medical Sciences, SOADU</h4>
-      <p>Dr. Kar provides mentorship in medical research, diagnostics, and health technology development.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/satya-jW3FVkch.png">
-      <h3>Dr. Satya Sundar Mohapatra</h3>
-      <h4>Faculty of Medical Sciences, SOADU</h4>
-      <p>Dr. Mohapatra guides innovators in clinical research, healthcare solutions, and translational medicine.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/subhasree-D5Eoo2us.png">
-      <h3>Dr. Subhashree Ray</h3>
-      <h4>Faculty of Medical Sciences, SOADU</h4>
-      <p>Dr. Ray mentors healthcare startups with a focus on patient-centric innovation and research excellence.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/jyoti-DeJXuedm.PNG">
-      <h3>Prof. Jyoti Ranjan Das</h3>
-      <h4>Faculty of Business Administration, SOADU</h4>
-      <p>Prof. Das supports startups in business strategy, management, and entrepreneurial leadership.</p>
-    </div>
-
-    <div class="mentor-card">
-      <img src="../assets/MentorsImages/nsahoo-2m_54SKB.png">
-      <h3>Prof. Niranjana Sahoo</h3>
-      <h4>Institute of Veterinary Science, SOADU</h4>
-      <p>Prof. Sahoo provides mentorship in veterinary sciences, agri-innovation, and applied research.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- Main Footer -->
- <footer class="main-footer">
-      <div class="footer-container">
-        <div class="footer-section about">
-          <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-            Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar, Odisha. The university is committed to academic excellence, research innovation and holistic development across multiple professional disciplines.
-          </p>
-          <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
-          <div class="heading-underline"></div>
-          <p class="footer-description">
-           AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University, supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
-          </p>
-          <div class="social-icons">
-            <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="footer-section links">
-          <h2 class="footer-heading">Quick Links</h2>
-          <div class="heading-underline"></div>
-          <div class="links-grid">
-          <ul>
-              <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
-              <li><a href="#">Team</a></li>
-              <li><a href="#">Board Members</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
-              <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
-              <li><a href= "http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
-            </ul>
-            <ul>
-              <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
-              <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
-              <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
-              <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
-              <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="footer-section contact">
-          <h2 class="footer-heading">Contact Info</h2>
-          <div class="heading-underline"></div>
-          <div class="contact-item">
-            <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
-            751030, Odisha, India
-          </div>
-          <div class="contact-item">
-            <strong>Email:</strong>
-            <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
-          </div>
-          <div class="contact-item">
-            <strong>Phone:</strong>
-            <a href="tel:+919437035905">+91-9437035905</a>,
-            <a href="tel:+9193384625239">+919338462523</a>
-          </div>
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h2 class="footer-heading">Siksha 'O' Anusandhan (SOA)</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          Siksha 'O' Anusandhan (SOA), a Deemed to be University under UGC, was established in 1995 in Bhubaneswar,
+          Odisha. The university is committed to academic excellence, research innovation and holistic development
+          across multiple professional disciplines.
+        </p>
+        <h2 class="footer-heading">AIC-SOA FOUNDATION</h2>
+        <div class="heading-underline"></div>
+        <p class="footer-description">
+          AIC SOA Foundation is an Atal Incubation Centre (AIC) at Siksha 'O' Anusandhan (SOA) Deemed to be University,
+          supported by NITI Aayog.It promotes innovation and entrepreneurship by incubating startups, providing
+          mentorship, infrastructure,industry connections,and training to transform ideas into scalable ,impactful
+          enterprises for students ,researchers ,and early stage founders acrsoss diverse sectors.
+        </p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/100093221611632/"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/aicsoa/?originalSubdomain=in"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/aicsoa/"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-    </footer>
 
-<script src="../aic.js"></script>
+      <div class="footer-section links">
+        <h2 class="footer-heading">Quick Links</h2>
+        <div class="heading-underline"></div>
+        <div class="links-grid">
+          <ul>
+            <!-- <li><a href="https://aic-soa-in.netlify.app/">Home</a></li> -->
+            <li><a href="../About us-section/team.html">Team</a></li>
+            <li><a href="../About us-section/board_members.html">Board Members</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/startup">Startup</a></li>
+            <li><a href="https://aic-soa-in.netlify.app/pages/mentor">Our Mentors</a></li>
+            <li><a href="http://127.0.0.1:5500/Gallery/gallery.html">Our Gallery</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.startupindia.gov.in/">Startup India Website</a></li>
+            <li><a href="https://startupodisha.gov.in/">Startup Odisha Website</a></li>
+            <li><a href="https://msme.gov.in/women-entrepreneurs">Women MSME Policy</a></li>
+            <li><a href="https://missionshakti.odisha.gov.in/">Women Empowerment Funds</a></li>
+            <li><a href="https://www.aim.gov.in/">Atal Innovation Mission</a></li>
+          </ul>
+        </div>
+      </div>
 
-<!-- Ensure mobile menu init runs even if DOMContentLoaded already fired on some devices -->
-<script>if (typeof initMobileMenu === 'function') { try { initMobileMenu(); } catch(e){ console.warn('menu init failed', e); } }</script>
+      <div class="footer-section contact">
+        <h2 class="footer-heading">Contact Info</h2>
+        <div class="heading-underline"></div>
+        <div class="contact-item">
+          <strong>Location:</strong>1st floor, S-Block, Sports Complex, ITER campus, Jagamara, Khandagiri, Bhubaneswar –
+          751030, Odisha, India
+        </div>
+        <div class="contact-item">
+          <strong>Email:</strong>
+          <a href="mailto:info.aic@soa.ac.in">info.aic@soa.ac.in</a>
+        </div>
+        <div class="contact-item">
+          <strong>Phone:</strong>
+          <a href="tel:+919437035905">+91-9437035905</a>,
+          <a href="tel:+9193384625239">+919338462523</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../aic.js"></script>
+
+  <!-- Ensure mobile menu init runs even if DOMContentLoaded already fired on some devices -->
+  <script>if (typeof initMobileMenu === 'function') { try { initMobileMenu(); } catch (e) { console.warn('menu init failed', e); } }</script>
 
 </body>
+
 </html>
